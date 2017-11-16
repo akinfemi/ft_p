@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ftp.h                                              :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akinfemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/16 11:36:08 by akinfemi          #+#    #+#             */
-/*   Updated: 2017/11/16 13:51:37 by akinfemi         ###   ########.fr       */
+/*   Created: 2017/11/16 12:22:26 by akinfemi          #+#    #+#             */
+/*   Updated: 2017/11/16 14:11:40 by akinfemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FTP_H
-# define FTP_H
-# include <unistd.h>
-# include <sys/socket.h>
-# include <netdb.h>
-# include <netinet/in.h>
-# include <arpa/inet.h>
-# include "../lib/includes/lib.h"
+#include "../include/ftp.h"
 
-void		usage(char *exec_name);
-void		print_error(int error);
-
-#endif
+void		print_error(int error)
+{
+	if (error == 1)
+	{
+		ft_printf("No protocol number in the /etc/protocol file\n");
+		exit(-1);
+	}
+}

@@ -6,7 +6,7 @@
 #    By: akinfemi <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:24:10 by akinfemi          #+#    #+#              #
-#    Updated: 2017/11/16 11:35:44 by akinfemi         ###   ########.fr        #
+#    Updated: 2017/11/16 14:43:47 by akinfemi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ LIB = lib/lib.a
 
 CFLAGS = -Wall -Werror -Wextra -I include/
 
-CLIENT_SRC = client.c
+CLIENT_SRC = client.c usage.c error.c
 
-SERVER_SRC = server.c
+SERVER_SRC = server.c usage.c error.c
 
 CLIENT_FILES = $(addprefix client_src/, $(CLIENT_SRC))
 
@@ -42,18 +42,18 @@ $(CLIENT_OBJ_FILES):%.o: %.c
 	@gcc -c $(CFLAGS) $< -o $@
 
 $(SERVER_OBJ_FILES):%.o: %.c
-	@gcc -c $(CFLAGS) $< -o $@
+	@gcc -c -o $@ $< $(CFLAGS)
 
 $(LIB):
 	@make -C lib/
 	@echo "Library created"
 
-$(CLIENT): $(CLIENT_OBJ_FILES)
+$(CLIENT): $(CLIENT_OBJ_FILES) $(LIB)
 	@gcc $< $(LIB) -o $@
 	@echo "Client created"
 
-$(SERVER): $(SERVER_OBJ_FILES)
-	@gcc $< $(LIB) -o $@
+$(SERVER): $(SERVER_OBJ_FILES) $(LIB)  
+	@gcc $< $(LIB) -o $(SERVER)
 	@echo "Server created."
 
 clean:
@@ -68,3 +68,5 @@ fclean: clean
 	@echo "Server executable removed"
 	@make -C lib/ fclean
 	@echo "Library cleaned"
+
+re: fclean all
