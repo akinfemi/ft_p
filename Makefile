@@ -6,13 +6,13 @@
 #    By: akinfemi <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:24:10 by akinfemi          #+#    #+#              #
-#    Updated: 2017/11/16 14:43:47 by akinfemi         ###   ########.fr        #
+#    Updated: 2017/11/16 15:16:25 by akinfemi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CLIENT = client
+CLI_ENT = client
 
-SERVER = server
+SER_VER = server
 
 LIB = lib/lib.a
 
@@ -26,17 +26,13 @@ CLIENT_FILES = $(addprefix client_src/, $(CLIENT_SRC))
 
 SERVER_FILES = $(addprefix server_src/, $(SERVER_SRC))
 
-CLIENT_OBJ_FILES = $(CLIENT_FILES:.c=.o)
-
-SERVER_OBJ_FILES = $(SERVER_FILES:.c=.o)
-
 .PHONY = client server all clean fclean re
 
-all : $(CLIENT) $(SERVER)
+all : $(CLI_ENT) $(SER_VER)
 
-client: $(CLIENT)
+client: $(CLI_ENT)
 
-server: $(SERVER)
+server: $(SER_VER)
 
 $(CLIENT_OBJ_FILES):%.o: %.c
 	@gcc -c $(CFLAGS) $< -o $@
@@ -48,12 +44,12 @@ $(LIB):
 	@make -C lib/
 	@echo "Library created"
 
-$(CLIENT): $(CLIENT_OBJ_FILES) $(LIB)
+$(CLI_ENT): $(CLIENT_OBJ_FILES) $(LIB)
 	@gcc $< $(LIB) -o $@
 	@echo "Client created"
 
-$(SERVER): $(SERVER_OBJ_FILES) $(LIB)  
-	@gcc $< $(LIB) -o $(SERVER)
+$(SER_VER): $(SERVER_OBJ_FILES) $(LIB)  
+	@gcc $< $(LIB) -o $(SER_VER)
 	@echo "Server created."
 
 clean:
@@ -62,9 +58,9 @@ clean:
 	@echo "Object files removed"
 
 fclean: clean
-	@rm -f $(CLIENT)
+	@rm -f $(CLI_ENT)
 	@echo "Client executable removed"
-	@rm -f $(SERVER)
+	@rm -f $(SER_VER)
 	@echo "Server executable removed"
 	@make -C lib/ fclean
 	@echo "Library cleaned"
