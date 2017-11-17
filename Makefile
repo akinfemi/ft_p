@@ -6,7 +6,7 @@
 #    By: akinfemi <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:24:10 by akinfemi          #+#    #+#              #
-#    Updated: 2017/11/16 15:16:25 by akinfemi         ###   ########.fr        #
+#    Updated: 2017/11/16 19:17:12 by akinfemi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,28 +28,28 @@ SERVER_FILES = $(addprefix server_src/, $(SERVER_SRC))
 
 .PHONY = client server all clean fclean re
 
+CLIENT_OBJ_FILES = $(CLIENT_FILES:.c=.o)
+
+SERVER_OBJ_FILES = $(SERVER_FILES:.c=.o)
+
 all : $(CLI_ENT) $(SER_VER)
-
-client: $(CLI_ENT)
-
-server: $(SER_VER)
-
-$(CLIENT_OBJ_FILES):%.o: %.c
-	@gcc -c $(CFLAGS) $< -o $@
-
-$(SERVER_OBJ_FILES):%.o: %.c
-	@gcc -c -o $@ $< $(CFLAGS)
 
 $(LIB):
 	@make -C lib/
 	@echo "Library created"
 
+$(CLIENT_OBJ_FILES):%.o: %.c
+	@gcc -c $(CFLAGS) $< -o $@
+
+$(SERVER_OBJ_FILES):%.o: %.c
+	@gcc -c $(CFLAGS) $< -o $@
+
 $(CLI_ENT): $(CLIENT_OBJ_FILES) $(LIB)
-	@gcc $< $(LIB) -o $@
+	@gcc $(CLIENT_OBJ_FILES) $(LIB) -o $(CLI_ENT)
 	@echo "Client created"
 
 $(SER_VER): $(SERVER_OBJ_FILES) $(LIB)  
-	@gcc $< $(LIB) -o $(SER_VER)
+	@gcc $(SERVER_OBJ_FILES) $(LIB) -o $(SER_VER)
 	@echo "Server created."
 
 clean:
