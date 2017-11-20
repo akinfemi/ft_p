@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_command.c                                   :+:      :+:    :+:   */
+/*   handle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akinfemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,36 +12,17 @@
 
 #include "../include/ftp.h"
 
-void        handle_command(int sockt, char *buffer)
-{
-    printf("%s",buffer); // verify reciept of info
-    if (ft_strcmp(buffer, "ls\n") == 0)
-        handle_ls(sockt);
-    else if (ft_strcmp(buffer, "cd\n") == 0)
-        handle_cd(sockt);
-    else if (ft_strcmp(buffer, "get\n") == 0)
-        handle_get(sockt);
-    else if (ft_strcmp(buffer, "put\n") == 0)
-        handle_put(sockt);
-    else if (ft_strcmp(buffer, "pwd\n") == 0)
-        handle_path(sockt);
-    else if (ft_strcmp(buffer, "quit\n") == 0)
-        handle_quit(sockt);
-    else
-        dprintf(sockt, "Invalid command.");
-}
-
-void        handle_ls(int socket_fd)
+void        handle_get(int socket_fd)
 {
     (void)socket_fd;
 }
 
-void        handle_cd(int socket_fd)
+void        handle_put(int socket_fd)
 {
     (void)socket_fd;
 }
 
-void        handle_path(int socket_fd)
+void        handle_quit(int socket_fd)
 {
     (void)socket_fd;
 }

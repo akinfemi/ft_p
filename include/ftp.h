@@ -26,5 +26,11 @@ void        handle_client(int socket_fd);
 void        handle_command(int socket, char *buffer);
 void        handle_response(int socket_fd);
 void        read_welcome(int socket_fd);
+void        handle_ls(int socket_fd);
+void        handle_get(int socket_fd);
+void        handle_put(int socket_fd);
+void        handle_quit(int socket_fd);
+void        handle_cd(int socket_fd);
+void        handle_path(int socket_fd);
 
 #endif
