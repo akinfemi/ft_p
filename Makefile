@@ -6,7 +6,7 @@
 #    By: akinfemi <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 10:24:10 by akinfemi          #+#    #+#              #
-#    Updated: 2017/11/16 19:17:12 by akinfemi         ###   ########.fr        #
+#    Updated: 2017/11/16 19:49:47 by akinfemi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ LIB = lib/lib.a
 
 CFLAGS = -Wall -Werror -Wextra -I include/
 
-CLIENT_SRC = client.c usage.c error.c
+CLIENT_SRC = client.c usage.c error.c handle_response.c utils.c
 
-SERVER_SRC = server.c usage.c error.c
+SERVER_SRC = server.c usage.c error.c handle_client.c handle_command.c
 
 CLIENT_FILES = $(addprefix client_src/, $(CLIENT_SRC))
 

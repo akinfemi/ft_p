@@ -16,12 +16,17 @@ void		print_error(int error)
 {
 	if (error == 1)
 	{
-		ft_printf("No protocol number in the /etc/protocol file\n");
+		printf("No protocol number in the /etc/protocol file\n");
 		exit(-1);
 	}
 	else if (error == 2)
 	{
-		ft_printf("Connection error.\n");
+		printf("Connection error.\n");
+		exit(2);
+	}
+	else if (error == 3)
+	{
+		printf("Socket failure.\n");
 		exit(2);
 	}
 }

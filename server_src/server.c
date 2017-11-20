@@ -33,23 +33,33 @@ int		create_server(int port)
 
 int		main(int ac, char **av)
 {
-	int			port;
-	int			socket;
-	int			cs;
+	int					port;
+	int					socket;
+	int					cs;
 	unsigned int 		addr_len;
 	struct sockaddr_in	addr;
-	char			buffer[1024];
-	int			rd;
+	int					pid;
 
 	if (ac != 2)
 		usage(av[0]);
 	port = ft_atoi(av[1]);
 	socket = create_server(port);
-	cs = accept(socket, (struct sockaddr *)&addr, &addr_len);
-	while ((rd = read(cs, buffer, 1023)) > 0)
+	while (1)
 	{
-		buffer[rd] = '\0';
-		ft_printf("%s\n",buffer);
+		cs = accept(socket, (struct sockaddr *)&addr, &addr_len);
+		if (cs == -1)
+			print_error(3);
+		if ((pid = fork()) == -1)
+		{
+			close(cs);
+			continue;
+		}
+		if (pid == 0) //on child processes only
+		{
+			write(cs, "Welcome to ft_p server", 22); // to client
+			printf("Client connected.\n"); //on server
+			handle_client(cs);
+		}
 	}
 	close(cs);
 	close(socket);

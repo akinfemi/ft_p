@@ -14,6 +14,6 @@
 
 void		usage(char *exec_name)
 {
-	ft_printf("Usage: %s <port_number>\n", exec_name);
+	ft_printf("Usage: %s <ip_address> <port_number>\n", exec_name);
 	exit(-1);
 }

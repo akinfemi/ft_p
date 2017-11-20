@@ -17,9 +17,14 @@
 # include <netdb.h>
 # include <netinet/in.h>
 # include <arpa/inet.h>
+# include <stdio.h>
 # include "../lib/includes/lib.h"
 
 void		usage(char *exec_name);
 void		print_error(int error);
+void        handle_client(int socket_fd);
+void        handle_command(int socket, char *buffer);
+void        handle_response(int socket_fd);
+void        read_welcome(int socket_fd);
 
 #endif
