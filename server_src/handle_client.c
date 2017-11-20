@@ -17,7 +17,9 @@ void        handle_client(int socket_fd)
     int     rd;
     char    buffer[1024];
 
-    rd = read(socket_fd, buffer, 1023);
-    buffer[rd] = '\0';
-    handle_command(socket_fd, buffer);
+    while((rd = read(socket_fd, buffer, 1023)) > 0)
+    {
+        buffer[rd] = '\0';
+        handle_command(socket_fd, buffer);
+    }
 }

@@ -48,10 +48,10 @@ int		main(int ac, char **av)
 	write(1, "$> ", 3);
 	while ((rd = read(0, buffer, 1023)) > 0)
 	{
-		write(1, "$> ", 3);
 		buffer[rd] = '\0';
 		dprintf(sockt, "%s",buffer); //send to sockt
 		handle_response(sockt);
+		write(1, "$> ", 3);
 	}
 	close(sockt);
 	return(0);
