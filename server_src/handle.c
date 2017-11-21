@@ -34,7 +34,7 @@ void        handle_quit(int socket_fd)
 
 void        handle_other(int sockt, char *buffer)
 {
-    (void)buffer;
-    // dprintf(sockt, "%s is an Invalid Command\n", buffer);
-    write(sockt, "Invalid Command\n", 17);
+    // (void)buffer;
+    dprintf(sockt, "%s is an Invalid Command\n", buffer);
+    // write(sockt, "Invalid Command\n", 17);
 }

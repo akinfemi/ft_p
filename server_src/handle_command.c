@@ -15,6 +15,8 @@
 void        handle_command(int sockt, char *buffer)
 {
     printf("%s",buffer); // verify reciept of info
+    // if (ft_strcmp(buffer, "ls\n") == 0)
+    //     write(sockt, (void *)buffer, ft_strlen(buffer));
     if (ft_strcmp(buffer, "ls\n") == 0)
         handle_ls(sockt, "\0");
     else if (ft_strcmp(buffer, "cd\n") == 0)
@@ -33,9 +35,29 @@ void        handle_command(int sockt, char *buffer)
 
 void        handle_ls(int socket_fd, char *flags)
 {
-    (void)flags;
-    execl("/bin/ls", ">", "out.tmp");
-    read_and_send(socket_fd, "out.tmp");
+    int     fd = 0;
+    int     pid;
+    int     stat_lc;
+    struct  rusage usage_info;
+
+    if ((pid = fork()) == 0)
+    {
+        fd = open(".out.tmp", O_RDWR | O_CREAT, 0666);
+        dprintf(2, "before dup %d\n", fd);
+        dup2(fd, 1); //redirected stdout to file
+        flags = "-l";
+        close(fd);
+        execl("/bin/ls", "ls", flags, (char *)NULL);
+        dprintf(2, "after dup %d\n", fd);
+        read_and_send(socket_fd, ".out.tmp");
+    }
+    if (pid == wait4(pid, &stat_lc, WNOHANG, &usage_info))
+    {
+        dprintf(2,"child process complete %d", fd);
+        // read_and_send(socket_fd, ".out.tmp");
+    }
+    // write(socket_fd, "buffer4\n", 8);
+    //unlink("out.tmp");
 }
 
 void        handle_cd(int socket_fd, char *dest)
