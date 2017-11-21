@@ -19,12 +19,18 @@ void        read_and_send(int sockfd, char *filename)
     char    *line;
     void    *buffer;
 
+    write(sockfd, "rns\n",4);
     fd = open(filename, O_RDONLY);
     if (fd == -1)
         print_error(4);
-    while ((rd = get_next_line(fd, &line)) > 0)
+    rd = get_next_line(fd, &line);
+    while (rd > 0)
     {
         buffer = line;
-        write(sockfd, buffer, rd);
+        dprintf(sockfd, "line\n");
+        // printf("%s \nRD: %d\n", line, rd);
+        free(line);
+        line = NULL;
+        rd = get_next_line(fd, &line);
     }
 }

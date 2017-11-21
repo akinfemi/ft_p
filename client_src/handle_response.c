@@ -17,9 +17,14 @@ void        handle_response(int socket_fd)
     int     rd;
     char    buffer[1024];
 
-    while((rd = read(socket_fd, buffer, 1023)) > 0){
-        buffer[rd] = '\0';
-        printf("server says: %s", buffer);
-        break;
-    }
+    rd = read(socket_fd, buffer, 1023);
+    buffer[rd] = '\0';
+    printf("server says: %s", buffer);
+    // while(rd > 0){
+    //     buffer[rd] = '\0';
+    //     printf("server says: %s", buffer);
+    //     printf("RD:%d\n", rd);
+    //     rd = read(socket_fd, buffer, 1023);
+    //     printf("RD:%d\n", rd);
+    // }
 }
