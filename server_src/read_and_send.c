@@ -1,37 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   read_and_send.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akinfemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/16 12:22:26 by akinfemi          #+#    #+#             */
-/*   Updated: 2017/11/16 14:55:02 by akinfemi         ###   ########.fr       */
+/*   Created: 2017/11/16 11:39:16 by akinfemi          #+#    #+#             */
+/*   Updated: 2017/11/16 14:57:39 by akinfemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ftp.h"
 
-void		print_error(int error)
+void        read_and_send(int sockfd, char *filename)
 {
-	if (error == 1)
-	{
-		printf("No protocol number in the /etc/protocol file\n");
-		exit(-1);
-	}
-	else if (error == 2)
-	{
-		printf("Bind error\n");
-		exit(-1);
-	}
-	else if (error == 3)
-	{
-		printf("Connection accept error\n");
-		exit(-1);
-	}
-	else if (error == 4)
-	{
-		printf("Error opening file\n");
-		exit(-1);
-	}
+    int     fd;
+    int     rd;
+    char    *line;
+    void    *buffer;
+
+    fd = open(filename, O_RDONLY);
+    if (fd == -1)
+        print_error(4);
+    while ((rd = get_next_line(fd, &line)) > 0)
+    {
+        buffer = line;
+        write(sockfd, buffer, rd);
+    }
 }
