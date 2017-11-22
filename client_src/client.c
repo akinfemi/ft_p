@@ -49,8 +49,11 @@ int		main(int ac, char **av)
 	while ((rd = read(0, buffer, 1023)) > 0)
 	{
 		buffer[rd] = '\0';
-		dprintf(sockt, "%s",buffer); //send to sockt
-		handle_response(sockt);
+		if (*buffer != '\n')
+		{
+			dprintf(sockt, "%s",buffer); //send to sockt
+			handle_response(sockt);
+		}
 		if (ft_strcmp(buffer, "quit\n") == 0)
 			exit(0);
 		write(1, "$> ", 3);

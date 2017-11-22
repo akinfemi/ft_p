@@ -22,13 +22,11 @@ void        read_and_send(int sockfd, char *filename)
     fd = open(filename, O_RDONLY);
     if (fd == -1)
         print_error(4);
-    rd = get_next_line(fd, &line);
-    while (rd > 0)
+    while ((rd = get_next_line(fd, &line)) > 0)
     {
         buffer = line;
         dprintf(sockfd, "%s", line);
         free(line);
         line = NULL;
-        rd = get_next_line(fd, &line);
     }
 }
