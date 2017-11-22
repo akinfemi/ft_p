@@ -33,27 +33,14 @@ void        handle_command(int sockt, char *buffer)
 
 void        handle_ls(int socket_fd, char *flags)
 {
-    int     fd = 0;
     int     pid;
-    int     stat_lc;
-    struct  rusage usage_info;
 
-    (void)socket_fd;
     if ((pid = fork()) == 0)
     {
-        fd = open(".out.tmp", O_RDWR | O_CREAT, 0666);
-        if (fd == -1)
-            print_error(4);
-        dup2(fd, 1); //redirect stdout to file
+        dup2(socket_fd, 1); //redirect stdout to file
         flags = "-l";
-        close(fd);
         execl("/bin/ls", "ls", flags, (char *)NULL);
     }
-    if (pid == wait4(pid, &stat_lc, WNOHANG, &usage_info))
-    {
-        read_and_send(socket_fd, ".out.tmp");
-    }
-    unlink(".out.tmp");
 }
 
 void        handle_cd(int socket_fd, char *dest)
