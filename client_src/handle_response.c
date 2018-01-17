@@ -21,6 +21,6 @@ void        handle_response(int socket_fd)
     if (rd > 0)
     {
         buffer[rd] = '\0';
-        printf("server says: %s", buffer);
+        printf("%s", buffer);
     }
 }

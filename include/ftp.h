@@ -33,13 +33,14 @@ typedef struct      s_data
 {
     int             socket_fd;
     char            home[MAXPATHLEN];
+    int             home_len;
     char            path[MAXPATHLEN];
     char            *u_input;
     int             as;
     t_command       *command;
 }                   t_data;
 
-void		usage(char *exec_name);
+void        usage(char *exec_name);
 void		print_error(int error);
 void        handle_client(t_data *data);
 void        handle_command(t_data *data);

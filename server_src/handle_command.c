@@ -65,6 +65,23 @@ void        handle_cd(t_data *data)
     (void)data;
 }
 
+// static void set_path(t_data *data, char buf[MAXPATHLEN])
+// {
+//     int     i;
+
+//     i = 0;
+//     if (ft_strcmp(data->home, (char *)buf) == 0
+//         || ft_strncmp(data->home, (char *)buf, data->home_len) != 0)
+//         return ;
+//     while (data->home[i] == buf[i])
+//         i++;
+//     while (buf[i] || i == MAXPATHLEN)
+//     {
+//         data->path[i + 1] = buf[i];
+//         i++;
+//     }
+// }
+
 void        handle_path(t_data *data)
 {
     char    buf[MAXPATHLEN];
@@ -74,6 +91,7 @@ void        handle_path(t_data *data)
     {
         dup2(data->as, 1); //redirect stdout to file
         getcwd(buf, MAXPATHLEN);
-        ft_printf("%s\n", buf);
+        // set_path(data, buf);
+        ft_printf("%s\n", data->path);
     }
 }

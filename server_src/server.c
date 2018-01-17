@@ -19,6 +19,7 @@ t_data		*init_data(int accepted_socket)
 	data = (t_data *)malloc(sizeof(t_data));
 	data->as = accepted_socket;
 	getcwd(data->home, MAXPATHLEN);
+	data->home_len = ft_strlen(data->home);
 	ft_bzero(data->path, MAXPATHLEN);
 	data->path[0] = '~';
 	return (data);
