@@ -12,7 +12,19 @@
 
 #include "../include/ftp.h"
 
-int		create_server(int port)
+t_data		*init_data(int accepted_socket)
+{
+	t_data	*data;
+
+	data = (t_data *)malloc(sizeof(t_data));
+	data->as = accepted_socket;
+	getcwd(data->home, MAXPATHLEN);
+	ft_bzero(data->path, MAXPATHLEN);
+	data->path[0] = '~';
+	return (data);
+}
+
+int				create_server(int port)
 {
 	int			sockt;
 	struct protoent		*protocol;
@@ -31,7 +43,7 @@ int		create_server(int port)
 	return(sockt);
 }
 
-int		main(int ac, char **av)
+int				main(int ac, char **av)
 {
 	int					port;
 	int					socket;
@@ -39,6 +51,7 @@ int		main(int ac, char **av)
 	unsigned int 		addr_len;
 	struct sockaddr_in	addr;
 	int					pid;
+	t_data				*data;
 
 	if (ac != 2)
 		usage(av[0]);
@@ -58,7 +71,8 @@ int		main(int ac, char **av)
 		{
 			write(cs, "Welcome to ft_p server", 22); // to client
 			printf("Client connected.\n"); //on server
-			handle_client(cs);
+			data = init_data(cs);
+			handle_client(data);
 		}
 	}
 	close(cs);

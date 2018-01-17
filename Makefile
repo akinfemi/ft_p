@@ -56,7 +56,7 @@ $(SER_VER): $(SERVER_OBJ_FILES) $(LIB)
 clean:
 	@rm -f $(CLIENT_OBJ_FILES)
 	@rm -f $(SERVER_OBJ_FILES)
-	@echo "Object files removed"
+	@make -C lib/ clean
 
 fclean: clean
 	@rm -f $(CLI_ENT)

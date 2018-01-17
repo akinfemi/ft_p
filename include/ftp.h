@@ -20,20 +20,38 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include "../lib/includes/lib.h"
+# define MAXPATHLEN 2048
+
+typedef struct      s_command
+{
+    char            *bin;
+    char            **flags;
+    char            **args;
+}                   t_command;
+
+typedef struct      s_data
+{
+    int             socket_fd;
+    char            home[MAXPATHLEN];
+    char            path[MAXPATHLEN];
+    char            *u_input;
+    int             as;
+    t_command       *command;
+}                   t_data;
 
 void		usage(char *exec_name);
 void		print_error(int error);
-void        handle_client(int socket_fd);
-void        handle_command(int socket, char *buffer);
+void        handle_client(t_data *data);
+void        handle_command(t_data *data);
 void        handle_response(int socket_fd);
 void        read_welcome(int socket_fd);
-void        handle_ls(int socket_fd, char *flags);
-void        handle_get(int socket_fd, char *filename);
-void        handle_put(int socket_fd, char *filepath, char *destination);
-void        handle_quit(int socket_fd);
-void        handle_cd(int socket_fd, char *dest);
-void        handle_path(int socket_fd);
-void        handle_other(int socket_fd, char *buffer);
-void        read_and_send(int sockfd, char *filename);
+void        handle_ls(t_data *data);
+void        handle_get(t_data *data);
+void        handle_put(t_data *data);
+void        handle_quit(t_data *data);
+void        handle_cd(t_data *data);
+void        handle_path(t_data *data);
+void        handle_other(t_data *data);
+void        read_and_send(t_data *data);
 
 #endif

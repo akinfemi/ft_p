@@ -22,11 +22,10 @@ char	*ft_strtrim(char const *s)
 	i = -1;
 	if (!s)
 		return (0);
-	while ((*s == ' ' || *s == '\t' || *s == '\n') && (*s))
+	while ((*s) && (*s <= 32))
 		s++;
 	w_len = ft_strlen(s);
-	while (w_len != 0 && ((s[w_len - 1] != '\0')) && (s[w_len - 1] == ' '
-				|| s[w_len - 1] == '\t' || s[w_len - 1] == '\n'))
+	while (w_len != 0 && ((s[w_len - 1] != '\0')) && (s[w_len - 1] <= 32))
 		w_len--;
 	ans = (char *)malloc(sizeof(char) * w_len + 1);
 	if (!ans)

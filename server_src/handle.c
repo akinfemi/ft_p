@@ -12,28 +12,25 @@
 
 #include "../include/ftp.h"
 
-void        handle_get(int socket_fd, char *filepath)
+void        handle_get(t_data *data)
 {
-    (void)socket_fd;
-    (void)filepath;
+    (void)data;
 }
 
-void        handle_put(int socket_fd, char *filepath, char *destination)
+void        handle_put(t_data *data)
 {
-    (void)socket_fd;
-    (void)filepath;
-    (void)destination;
+    (void)data;
 }
 
-void        handle_quit(int socket_fd)
+void        handle_quit(t_data *data)
 {
     printf("Closing client.\n");
-    write(socket_fd, "Goodbye :) ...\n", 15);
-    close(socket_fd);
+    write(data->as, "Goodbye :) ...\n", 15);
+    //cleaning up
+    close(data->as);
 }
 
-void        handle_other(int sockt, char *buffer)
+void        handle_other(t_data *data)
 {
-    buffer[ft_strlen(buffer) - 1] = '\0';
-    dprintf(sockt, "%s is an Invalid Command\n", buffer);
+    dprintf(data->as, "%s is an Invalid Command\n", data->u_input);
 }

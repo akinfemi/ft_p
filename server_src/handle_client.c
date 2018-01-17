@@ -12,14 +12,15 @@
 
 #include "../include/ftp.h"
 
-void        handle_client(int socket_fd)
+void        handle_client(t_data *data)
 {
     int     rd;
     char    buffer[1024];
 
-    while((rd = read(socket_fd, buffer, 1023)) > 0)
+    while((rd = read(data->as, buffer, 1023)) > 0)
     {
         buffer[rd] = '\0';
-        handle_command(socket_fd, buffer);
+        data->u_input = ft_strtrim(buffer);
+        handle_command(data);
     }
 }
