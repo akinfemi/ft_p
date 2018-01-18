@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <stdio.h>
+#include "../include/ftp.h"
 
 t_list          *new_token(char *word, int type)
 {

@@ -14,21 +14,14 @@
 
 void        handle_command(t_data *data)
 {
-    printf("%s", data->u_input); // verify reciept of info
-    if (ft_strcmp(data->u_input, "ls") == 0)
-        handle_ls(data);
-    else if (ft_strcmp(data->u_input, "cd") == 0)
-        handle_cd(data);
-    else if (ft_strcmp(data->u_input, "get") == 0)
-        handle_get(data);
-    else if (ft_strcmp(data->u_input, "put") == 0)
-        handle_put(data);
-    else if (ft_strcmp(data->u_input, "pwd") == 0)
-        handle_path(data);
-    else if (ft_strcmp(data->u_input, "quit") == 0)
-        handle_quit(data);
-    else
-        handle_other(data);
+    t_list  *commands;
+
+    commands = data->commands;
+    while (commands)
+    {
+        dispatch((t_command *)commands->content);
+        commands = commands->next;
+    }
 }
 
 void        handle_ls(t_data *data)
@@ -62,7 +55,7 @@ void        handle_cd(t_data *data)
     //         printf("%s\n", buf);
     //     }
     // }
-    (void)data;
+    (void) data;
 }
 
 // static void set_path(t_data *data, char buf[MAXPATHLEN])

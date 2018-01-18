@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <stdio.h>
+#include "../include/ftp.h"
 
 static char     **get_args(t_list **alst, int *type)
 {

@@ -21,6 +21,15 @@
 # include <fcntl.h>
 # include "../lib/includes/lib.h"
 # define MAXPATHLEN 2048
+# define WORD 1
+# define CHAIN 2
+# define INIT_SIZE 10
+
+typedef struct      s_token
+{
+    char            *word;
+    int             type;
+}                   t_token;
 
 typedef struct      s_command
 {
@@ -31,14 +40,20 @@ typedef struct      s_command
 
 typedef struct      s_data
 {
-    int             socket_fd;
     char            home[MAXPATHLEN];
     int             home_len;
     char            path[MAXPATHLEN];
     char            *u_input;
     int             as;
-    t_command       *command;
+    t_list          *commands;
 }                   t_data;
+
+typedef struct  s_exec
+{
+    char        *bin;
+    char        **args;
+    int         chain;
+}               t_exec;
 
 void        usage(char *exec_name);
 void		print_error(int error);
@@ -54,7 +69,12 @@ void        handle_cd(t_data *data);
 void        handle_path(t_data *data);
 void        handle_other(t_data *data);
 void        read_and_send(t_data *data);
+void        dispatch(t_command *command);
 
 /*<-- Lexer and Parser -->*/
+t_list      *ft_lexer(char *input);
+t_list      *ft_parser(t_list *tokens);
+t_list      *ft_tokenize(char **words);
+char        **sh_strsplit(char *words);
 
 #endif

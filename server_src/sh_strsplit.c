@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/ftp.h"
 
 static int  ft_is_quote(char c)
 {

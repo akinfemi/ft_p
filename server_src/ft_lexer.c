@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <stdio.h>
+#include "../include/ftp.h"
 
 t_list      *ft_lexer(char *input)
 {

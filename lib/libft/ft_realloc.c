@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_client.c                                    :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akinfemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/16 11:39:16 by akinfemi          #+#    #+#             */
-/*   Updated: 2017/11/16 14:57:39 by akinfemi         ###   ########.fr       */
+/*   Created: 2017/12/27 10:48:50 by akinfemi          #+#    #+#             */
+/*   Updated: 2017/12/27 10:48:53 by akinfemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ftp.h"
+#include "libft.h"
 
-void        handle_client(t_data *data)
+void            *ft_realloc(void *alloc, size_t src_size, size_t size)
 {
-    int     rd;
-    char    buffer[1024];
-    t_list  *tokens;
+    void        *ptr;
 
-    while((rd = read(data->as, buffer, 1023)) > 0)
+    if (!alloc)
+        return (ft_memalloc(size));
+    if (0 == size)
     {
-        buffer[rd] = '\0';
-        data->u_input = ft_strtrim(buffer);
-        tokens = ft_lexer(data->u_input);
-        data->commands = ft_parser(tokens);
-        handle_command(data);
+        free(alloc);
+        return (NULL);
     }
+    ptr = alloc;
+    alloc = ft_memalloc(size);
+    if (!alloc)
+        return (ptr);
+    ft_memmove(alloc, ptr, src_size);
+    free(ptr);
+    return (alloc);
 }

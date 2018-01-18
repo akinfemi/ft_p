@@ -12,21 +12,22 @@
 
 #include "../include/ftp.h"
 
-void        read_and_send(int sockfd, char *filename)
+void        read_and_send(t_data *data)
 {
-    int     fd;
-    int     rd;
-    char    *line;
-    void    *buffer;
+    // int     fd;
+    // int     rd;
+    // char    *line;
+    // void    *buffer;
 
-    fd = open(filename, O_RDONLY);
-    if (fd == -1)
-        print_error(4);
-    while ((rd = get_next_line(fd, &line)) > 0)
-    {
-        buffer = line;
-        dprintf(sockfd, "%s", line);
-        free(line);
-        line = NULL;
-    }
+    // fd = open(filename, O_RDONLY);
+    // if (fd == -1)
+    //     print_error(4);
+    // while ((rd = get_next_line(fd, &line)) > 0)
+    // {
+    //     buffer = line;
+    //     dprintf(data->as, "%s", line);
+    //     free(line);
+    //     line = NULL;
+    // }
+    (void)data;
 }
