@@ -61,15 +61,15 @@ void        handle_client(t_data *data);
 void        handle_command(t_data *data);
 void        handle_response(int socket_fd);
 void        read_welcome(int socket_fd);
-void        handle_ls(t_data *data);
-void        handle_get(t_data *data);
-void        handle_put(t_data *data);
-void        handle_quit(t_data *data);
-void        handle_cd(t_data *data);
-void        handle_path(t_data *data);
-void        handle_other(t_data *data);
+int         handle_ls(t_data *data);
+int         handle_get(t_data *data);
+int         handle_put(t_data *data);
+int         handle_quit(t_data *data);
+int         handle_cd(t_data *data);
+int         handle_path(t_data *data);
+int         handle_other(t_data *data);
 void        read_and_send(t_data *data);
-void        dispatch(t_command *command);
+int         dispatch(t_data *data);
 
 /*<-- Lexer and Parser -->*/
 t_list      *ft_lexer(char *input);

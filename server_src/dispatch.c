@@ -12,31 +12,45 @@
 
 #include "../include/ftp.h"
 
-void        dispatch(t_command *command)
+char        *ls_commands[] =
 {
-    (void)command;
+    "ls",
+    "cd",
+    "pwd",
+    "quit",
+    "put",
+    "get"
+};
+
+int     (*ls_cmds[]) (t_data *data) = 
+{
+    &handle_ls,
+    &handle_cd,
+    &handle_path,
+    &handle_quit,
+    &handle_put,
+    &handle_get,
+    &handle_other
+};
+
+int     dispatch(t_data *data)
+{
+    int         i;
+    int         len;
+    t_command   *command;
+
+    i = 0;
+    command = (t_command *)data->commands->content;
+    len = sizeof(ls_commands) / sizeof(char *);
+    printf("len: %d\n", len);
+    while (i < len)
+    {
+        if (ft_strcmp(ls_commands[i], command->bin) == 0)
+        {
+            return ((*ls_cmds[i])(data));
+        }
+        i++;
+        printf("len: %d\n", len);
+    }
+    return ((*ls_cmds[i - 1])(data));
 }
-
-/*
-    if (ft_strcmp(command->bin, "ls") == 0)
-    handle_ls(data);
-    else if (ft_strcmp(command->bin, "cd") == 0)
-    handle_cd(data);
-    else if (ft_strcmp(command->bin, "get") == 0)
-    handle_get(data);
-    else if (ft_strcmp(command->bin, "put") == 0)
-    handle_put(data);
-    else if (ft_strcmp(command->bin, "pwd") == 0)
-    handle_path(data);
-    else if (ft_strcmp(command->bin, "quit") == 0)
-    handle_quit(data);
-    else
-    handle_other(data);
-
-typedef struct      s_command
-{
-    char            *bin;
-    char            **flags;
-    char            **args;
-}                   t_command;
-*/

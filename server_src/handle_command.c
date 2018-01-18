@@ -14,28 +14,37 @@
 
 void        handle_command(t_data *data)
 {
-    t_list  *commands;
+    t_list  *temp;
 
-    commands = data->commands;
-    while (commands)
+    while (data->commands)
     {
-        dispatch((t_command *)commands->content);
-        commands = commands->next;
+        temp = data->commands;
+        dispatch(data);
+        data->commands = data->commands->next;
+        // ft_lstdelone(temp, del);
     }
 }
 
-void        handle_ls(t_data *data)
+int         handle_ls(t_data *data)
 {
-    int     pid;
+    pid_t           pid;
+    int             status;
+    struct rusage   *rusage;
 
+    rusage = NULL;
     if ((pid = fork()) == 0)
     {
         dup2(data->as, 1);
         execl("/bin/ls", "ls", "-l", (char *)NULL);
     }
+    while (!WIFEXITED(status) && !WIFSIGNALED(status))
+    {
+        pid = wait4(pid, &status, WUNTRACED ,rusage);
+    }
+    return (1);
 }
 
-void        handle_cd(t_data *data)
+int         handle_cd(t_data *data)
 {
     // if (!dest)
     // {
@@ -56,6 +65,7 @@ void        handle_cd(t_data *data)
     //     }
     // }
     (void) data;
+    return (1);
 }
 
 // static void set_path(t_data *data, char buf[MAXPATHLEN])
@@ -75,7 +85,7 @@ void        handle_cd(t_data *data)
 //     }
 // }
 
-void        handle_path(t_data *data)
+int         handle_path(t_data *data)
 {
     char    buf[MAXPATHLEN];
     int     pid;
@@ -87,4 +97,5 @@ void        handle_path(t_data *data)
         // set_path(data, buf);
         ft_printf("%s\n", data->path);
     }
+    return (1);
 }

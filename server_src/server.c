@@ -12,7 +12,7 @@
 
 #include "../include/ftp.h"
 
-t_data		*init_data(int accepted_socket)
+t_data			*init_data(int accepted_socket)
 {
 	t_data	*data;
 
