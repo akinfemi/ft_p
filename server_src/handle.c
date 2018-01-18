@@ -26,7 +26,7 @@ void        handle_quit(t_data *data)
 {
     printf("Closing client.\n");
     write(data->as, "Goodbye :) ...\n", 15);
-    //cleaning up
+    //cleaning up client memory usage
     close(data->as);
 }
 

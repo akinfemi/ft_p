@@ -55,4 +55,6 @@ void        handle_path(t_data *data);
 void        handle_other(t_data *data);
 void        read_and_send(t_data *data);
 
+/*<-- Lexer and Parser -->*/
+
 #endif
