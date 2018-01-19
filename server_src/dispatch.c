@@ -50,5 +50,5 @@ int     dispatch(t_data *data)
         }
         i++;
     }
-    return ((*ls_cmds[i - 1])(data));
+    return ((*ls_cmds[i])(data));
 }

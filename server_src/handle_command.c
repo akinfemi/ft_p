@@ -69,30 +69,3 @@ int         handle_cd(t_data *data)
     (void) data;
     return (1);
 }
-
-// static void set_path(t_data *data, char buf[PATH_MAX])
-// {
-//     int     i;
-
-//     i = 0;
-//     if (ft_strcmp(data->home, (char *)buf) == 0
-//         || ft_strncmp(data->home, (char *)buf, data->home_len) != 0)
-//         return ;
-//     while (data->home[i] == buf[i])
-//         i++;
-//     while (buf[i] || i == PATH_MAX)
-//     {
-//         data->path[i + 1] = buf[i];
-//         i++;
-//     }
-// }
-
-int         handle_path(t_data *data)
-{
-    // char    buf[PATH_MAX];
-
-    // getcwd(buf, PATH_MAX);
-    // set_path(data, buf);
-    write(data->as, data->home, data->home_len);
-    return (1);
-}
