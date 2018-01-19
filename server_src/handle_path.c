@@ -27,6 +27,7 @@ static void path_strjoin(t_data *data, char *str)
         j++;
         i++;
     }
+    // free(str);
 }
 
 static void set_path(t_data *data)

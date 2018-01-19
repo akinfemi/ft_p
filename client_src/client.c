@@ -24,6 +24,8 @@ int		create_client(char *ip_addr, int port)
 	sockt = socket(PF_INET, SOCK_STREAM, protocol->p_proto);
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(port);
+	if (ft_strcmp(ip_addr, "localhost") == 0)
+		ip_addr = "127.0.0.1";
 	addr.sin_addr.s_addr = inet_addr(ip_addr);
 	if(connect(sockt, (const struct sockaddr *)&addr, sizeof(addr)) == -1)
 		print_error(2);
