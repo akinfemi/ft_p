@@ -48,24 +48,43 @@ int         handle_ls(t_data *data)
 
 int         handle_cd(t_data *data)
 {
-    // if (!dest)
-    // {
-    //     if ((pid = fork()) == 0)
-    //     {
-    //         // dup2(socket_fd, 1);
-    //         // // getcwd(buf, PATH_MAX);
-    //         // printf("%s\n", buf);
-    //     }
-    // }
-    // else 
-    // {
-    //     if ((pid = fork()) == 0)
-    //     {
-    //         dup2(socket_fd, 1);
-    //         // getcwd(buf, PATH_MAX);
-    //         printf("%s\n", buf);
-    //     }
-    // }
-    (void) data;
+    t_command   *cmd;
+    char        *temp_path;
+
+    cmd = (t_command *)data->commands->content;
+    if (!cmd->args || !cmd->args[1])
+    {
+        chdir(data->home);
+    }
+    else
+    {
+        temp_path = ft_strndup((char *)data->home, PATH_MAX);
+        temp_path  = ft_strcat(temp_path, "/");
+        temp_path  = ft_strcat(temp_path, cmd->args[1]);
+        if (chdir(temp_path) == 0)
+        {
+            dprintf(data->as, "%s\n", "cd : SUCCESS");
+            path_strjoin(data, "/");
+            path_strjoin(data, cmd->args[1]);
+        }
+        else
+            dprintf(data->as, "%s %s\n", "cd : ERROR", temp_path);
+        free(temp_path);
+    }
+    return (1);
+}
+
+int         handle_quit(t_data *data)
+{
+    printf("Closing client.\n");
+    write(data->as, "Goodbye :) ...\n", 15);
+    //cleaning up client memory usage
+    close(data->as);
+    return (1);
+}
+
+int         handle_other(t_data *data)
+{
+    dprintf(data->as, "%s is an Invalid Command\n", data->u_input);
     return (1);
 }

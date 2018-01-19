@@ -12,16 +12,16 @@
 
 #include "../include/ftp.h"
 
-static void path_strjoin(t_data *data, char *str)
+void        path_strjoin(t_data *data, char *str)
 {
     int     i;
     int     j;
 
     i = 0;
     j = 0;
-    while(data->path[i] != '\0' || data->path[i] != '\n')
+    while(data->path[i])
         i++;
-    while (i < PATH_MAX)
+    while (str[j] != '\0' && i < PATH_MAX)
     {
         data->path[i] = str[j];
         j++;

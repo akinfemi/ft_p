@@ -23,18 +23,3 @@ int         handle_put(t_data *data)
     (void)data;
     return (1);
 }
-
-int         handle_quit(t_data *data)
-{
-    printf("Closing client.\n");
-    write(data->as, "Goodbye :) ...\n", 15);
-    //cleaning up client memory usage
-    close(data->as);
-    return (1);
-}
-
-int         handle_other(t_data *data)
-{
-    dprintf(data->as, "%s is an Invalid Command\n", data->u_input);
-    return (1);
-}

@@ -43,6 +43,7 @@ typedef struct      s_data
     char            home[PATH_MAX];
     int             home_len;
     char            path[PATH_MAX];
+    char            root;
     char            *u_input;
     int             as;
     t_list          *commands;
@@ -69,5 +70,5 @@ t_list      *ft_lexer(char *input);
 t_list      *ft_parser(t_list *tokens);
 t_list      *ft_tokenize(char **words);
 char        **sh_strsplit(char *words);
-
+void        path_strjoin(t_data *data, char *str);
 #endif

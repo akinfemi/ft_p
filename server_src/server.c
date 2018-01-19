@@ -22,6 +22,7 @@ t_data			*init_data(int accepted_socket)
 	data->home_len = ft_strlen(data->home);
 	ft_bzero(data->path, PATH_MAX);
 	data->path[0] = '~';
+	data->root = '~';
 	data->commands = NULL;
 	data->u_input = NULL;
 	return (data);
