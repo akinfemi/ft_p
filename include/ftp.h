@@ -20,7 +20,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include "../lib/includes/lib.h"
-# define MAXPATHLEN 2048
+# include <limits.h>
 # define WORD 1
 # define CHAIN 2
 # define INIT_SIZE 10
@@ -34,26 +34,19 @@ typedef struct      s_token
 typedef struct      s_command
 {
     char            *bin;
-    char            **flags;
     char            **args;
+    int             chain;
 }                   t_command;
 
 typedef struct      s_data
 {
-    char            home[MAXPATHLEN];
+    char            home[PATH_MAX];
     int             home_len;
-    char            path[MAXPATHLEN];
+    char            path[PATH_MAX];
     char            *u_input;
     int             as;
     t_list          *commands;
 }                   t_data;
-
-typedef struct  s_exec
-{
-    char        *bin;
-    char        **args;
-    int         chain;
-}               t_exec;
 
 void        usage(char *exec_name);
 void		print_error(int error);

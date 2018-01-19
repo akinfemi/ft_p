@@ -42,7 +42,6 @@ int     dispatch(t_data *data)
     i = 0;
     command = (t_command *)data->commands->content;
     len = sizeof(ls_commands) / sizeof(char *);
-    printf("len: %d\n", len);
     while (i < len)
     {
         if (ft_strcmp(ls_commands[i], command->bin) == 0)
@@ -50,7 +49,6 @@ int     dispatch(t_data *data)
             return ((*ls_cmds[i])(data));
         }
         i++;
-        printf("len: %d\n", len);
     }
     return ((*ls_cmds[i - 1])(data));
 }

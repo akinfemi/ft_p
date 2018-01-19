@@ -12,7 +12,7 @@
 
 #include "../include/ftp.h"
 
-static char     **get_args(t_list **alst, int *type)
+static char     **get_args(t_list **alst, int *type, char *bin)
 {
     char        **res;
     int         size;
@@ -22,8 +22,9 @@ static char     **get_args(t_list **alst, int *type)
 
     size = INIT_SIZE;
     list = *alst;
-    i = 0;
+    i = 1;
     res = (char **)ft_memalloc(sizeof(char *) * size);
+    res[0] = bin;
     while (list && i < size)
     {
         if (i == size - 1)
@@ -45,48 +46,65 @@ static char     **get_args(t_list **alst, int *type)
     return (res);
 }
 
+// static void print_tokens(t_list *tokens)
+// {
+//     t_token *test;
+//     while(tokens)
+//     {
+//         test = tokens->content;
+//         printf("Tokes: %s\n", test->word);
+//         tokens = tokens->next;
+//     }
+// }
+
 t_list          *ft_parser(t_list *tokens)
 {
     t_list      *commands;
-    t_exec      *command;
+    t_command   *command;
     t_token     *token;
     int         type;
 
     commands = NULL;
+    // print_tokens(tokens);
+    // printf("Here tokens\n");
     while (tokens)
     {
         token = tokens->content;
-        command = (t_exec *)malloc(sizeof(t_exec));
+        command = (t_command *)ft_memalloc(sizeof(t_command));
         command->bin = token->word;
         command->args = NULL;
         if (token->type == WORD){
             tokens = tokens->next;
-            command->args = get_args(&tokens, &type);
+            command->args = get_args(&tokens, &type, command->bin);
             command->chain = type;
             ft_lstappend(&commands, ft_lstnew(command, sizeof(command)));
+            // printf("parser bin: %s\n", command->bin);
             continue;
         }
+        // printf("Parser chain: %s\n");
         command->chain = token->type;
         ft_lstappend(&commands, ft_lstnew(command, sizeof(command)));
         tokens = tokens->next;
     }
-    int i = 0;
-    while (commands)
-    {
-        command = commands->content;
-        if (!command->args)
-        {
-            commands = commands->next;
-            printf("NUULL\n");
-            continue;
-        }
-        while(command->args[i])
-        {
-            printf("Arg[%d] = %s\n", i, command->args[i]);
-            i++;
-        }
-        commands = commands->next;
-    }
-    // return (commands);
-    return (0);
+    // int i = 0;
+    // t_list *cm = commands;
+    // while (cm)
+    // {
+    //     command = cm->content;
+    //     if (!command->args)
+    //     {
+    //         cm = cm->next;
+    //         printf("NUULL\n");
+    //         continue;
+    //     }
+    //     while(command->args[i])
+    //     {
+    //         printf("Arg[%d] = %s\n", i, command->args[i]);
+    //         i++;
+    //     }
+    //     printf("Command bins: %s\n", command->bin);
+    //     cm = cm->next;
+    // }
+    // printf("bye tokens\n");
+    return (commands);
 }

@@ -30,16 +30,18 @@ int         handle_ls(t_data *data)
     pid_t           pid;
     int             status;
     struct rusage   *rusage;
+    t_command       *cmd;
 
     rusage = NULL;
     if ((pid = fork()) == 0)
     {
         dup2(data->as, 1);
-        execl("/bin/ls", "ls", "-l", (char *)NULL);
+        cmd = (t_command *)data->commands->content;
+        execv("/bin/ls", cmd->args);
     }
     while (!WIFEXITED(status) && !WIFSIGNALED(status))
     {
-        pid = wait4(pid, &status, WUNTRACED ,rusage);
+        pid = wait4(pid, &status, WUNTRACED, rusage);
     }
     return (1);
 }
@@ -51,7 +53,7 @@ int         handle_cd(t_data *data)
     //     if ((pid = fork()) == 0)
     //     {
     //         // dup2(socket_fd, 1);
-    //         // // getcwd(buf, MAXPATHLEN);
+    //         // // getcwd(buf, PATH_MAX);
     //         // printf("%s\n", buf);
     //     }
     // }
@@ -60,7 +62,7 @@ int         handle_cd(t_data *data)
     //     if ((pid = fork()) == 0)
     //     {
     //         dup2(socket_fd, 1);
-    //         // getcwd(buf, MAXPATHLEN);
+    //         // getcwd(buf, PATH_MAX);
     //         printf("%s\n", buf);
     //     }
     // }
@@ -68,7 +70,7 @@ int         handle_cd(t_data *data)
     return (1);
 }
 
-// static void set_path(t_data *data, char buf[MAXPATHLEN])
+// static void set_path(t_data *data, char buf[PATH_MAX])
 // {
 //     int     i;
 
@@ -78,7 +80,7 @@ int         handle_cd(t_data *data)
 //         return ;
 //     while (data->home[i] == buf[i])
 //         i++;
-//     while (buf[i] || i == MAXPATHLEN)
+//     while (buf[i] || i == PATH_MAX)
 //     {
 //         data->path[i + 1] = buf[i];
 //         i++;
@@ -87,15 +89,10 @@ int         handle_cd(t_data *data)
 
 int         handle_path(t_data *data)
 {
-    char    buf[MAXPATHLEN];
-    int     pid;
+    // char    buf[PATH_MAX];
 
-    if ((pid = fork()) == 0)
-    {
-        dup2(data->as, 1); //redirect stdout to file
-        getcwd(buf, MAXPATHLEN);
-        // set_path(data, buf);
-        ft_printf("%s\n", data->path);
-    }
+    // getcwd(buf, PATH_MAX);
+    // set_path(data, buf);
+    write(data->as, data->home, data->home_len);
     return (1);
 }

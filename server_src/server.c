@@ -18,9 +18,9 @@ t_data			*init_data(int accepted_socket)
 
 	data = (t_data *)malloc(sizeof(t_data));
 	data->as = accepted_socket;
-	getcwd(data->home, MAXPATHLEN);
+	getcwd(data->home, PATH_MAX);
 	data->home_len = ft_strlen(data->home);
-	ft_bzero(data->path, MAXPATHLEN);
+	ft_bzero(data->path, PATH_MAX);
 	data->path[0] = '~';
 	data->commands = NULL;
 	data->u_input = NULL;
@@ -29,7 +29,7 @@ t_data			*init_data(int accepted_socket)
 
 int				create_server(int port)
 {
-	int			sockt;
+	int					sockt;
 	struct protoent		*protocol;
 	struct sockaddr_in	addr;
 
