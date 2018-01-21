@@ -38,14 +38,25 @@ typedef struct      s_command
     int             chain;
 }                   t_command;
 
+typedef struct      s_item
+{
+    char            *word;
+    struct s_item   *next;
+}                   t_item;
+  
+typedef struct  s_stack
+{
+    t_item          *item;
+    size_t          size;
+}                   t_stack;
+
 typedef struct      s_data
 {
     char            home[PATH_MAX];
     int             home_len;
-    char            path[PATH_MAX];
-    char            root;
     char            *u_input;
     int             as;
+    t_stack         *p_stack;
     t_list          *commands;
 }                   t_data;
 
@@ -64,11 +75,20 @@ int         handle_path(t_data *data);
 int         handle_other(t_data *data);
 void        read_and_send(t_data *data);
 int         dispatch(t_data *data);
+t_stack     *init_path(void);
+char        *get_path(t_data *data);
+void        path_strjoin(char *path, char *str);
+void        set_path(t_data *data, char **args);
 
 /*<-- Lexer and Parser -->*/
 t_list      *ft_lexer(char *input);
 t_list      *ft_parser(t_list *tokens);
 t_list      *ft_tokenize(char **words);
 char        **sh_strsplit(char *words);
-void        path_strjoin(t_data *data, char *str);
+
+/*<--------Stack--------------->*/
+t_stack             *stackInit(void);
+void                *pop(t_stack *stack);
+void                push(t_stack *stack, char *word);
+
 #endif

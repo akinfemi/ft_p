@@ -55,19 +55,23 @@ int         handle_cd(t_data *data)
     if (!cmd->args || !cmd->args[1])
     {
         chdir(data->home);
+        set_path(data, cmd->args);
         dprintf(data->as, "%s\n", "cd : SUCCESS");
     }
     else
     {
-        temp_path = ft_strndup((char *)data->home, PATH_MAX);
-        temp_path  = ft_strcat(temp_path, "/");
-        temp_path  = ft_strcat(temp_path, cmd->args[1]);
+        set_path(data, cmd->args);
+        temp_path = get_path(data);
+        printf("temp path cd: %s\n", temp_path);
         if (chdir(temp_path) == 0)
         {
             dprintf(data->as, "%s\n", "cd : SUCCESS");
         }
         else
+        {
             dprintf(data->as, "%s %s\n", "cd : ERROR", temp_path);
+            pop(data->p_stack);
+        }
         // free(temp_path);
     }
     return (1);

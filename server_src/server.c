@@ -20,9 +20,7 @@ t_data			*init_data(int accepted_socket)
 	data->as = accepted_socket;
 	getcwd(data->home, PATH_MAX);
 	data->home_len = ft_strlen(data->home);
-	ft_bzero(data->path, PATH_MAX);
-	data->path[0] = '~';
-	data->root = '~';
+	data->p_stack = init_path();
 	data->commands = NULL;
 	data->u_input = NULL;
 	return (data);
