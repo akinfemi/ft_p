@@ -66,11 +66,13 @@ int         handle_cd(t_data *data)
         if (chdir(temp_path) == 0)
         {
             dprintf(data->as, "%s\n", "cd : SUCCESS");
+            data->p_stack->temp = 0;
         }
         else
         {
             dprintf(data->as, "%s %s\n", "cd : ERROR", temp_path);
-            pop(data->p_stack);
+            while (data->p_stack->temp-- > 0)
+                pop(data->p_stack);
         }
         // free(temp_path);
     }

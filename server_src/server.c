@@ -21,6 +21,7 @@ t_data			*init_data(int accepted_socket)
 	getcwd(data->home, PATH_MAX);
 	data->home_len = ft_strlen(data->home);
 	data->p_stack = init_path();
+	data->p_stack->temp = 0;
 	data->commands = NULL;
 	data->u_input = NULL;
 	return (data);

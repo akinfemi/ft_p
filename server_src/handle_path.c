@@ -40,38 +40,73 @@ void        pop_all(t_data *data)
         pop(data->p_stack);
 }
 
-void        set_path(t_data *data, char **args)
+int         set_path(t_data *data, char **args)
 {
     char    *path;
+    char    **path_args;
+    int     i;
+    // int     len;
+    // char    *temp;
+    // char    *t_path;
 
+    i = 0;
     if (!args || !args[1])
     {
         pop_all(data);
-        return ;
+        return (1);
     }
     path = args[1];
     if (ft_strcmp(path, "/") == 0) //prevent root access
-        return ;
-    while (path && *path)
+        return (0);
+    path_args = ft_strsplit(path, '/');
+    while (path_args && path_args[i])
     {
-        //if only one dir
-        if (!ft_contains(path, '/') && ft_strncmp(path, "..", 2) != 0)
+        if (ft_strcmp(path_args[i], "..") == 0 && data->p_stack->size <= 1)
+            return (0);
+        if (ft_strcmp(path_args[i], "..") == 0 && data->p_stack->size > 1)
         {
-            push(data->p_stack, path);
-            printf("Push: %s\n", path);
-            path = "\0";
-            break;
-        }
-        if (ft_strncmp(path, "..", 2) == 0 && data->p_stack->size > 1)
-        {
-            printf("popped\n");
             pop(data->p_stack);
-            if (path[2] == '/' || path[2] == '\0')
-                ft_memmove(path, path + 3, ft_strlen(path - 3));
+            data->p_stack->temp++;
         }
-        else if (ft_strncmp(path, "..", 2) == 0 && data->p_stack->size <= 1)
-            break;
+        else
+        {
+            push(data->p_stack, path_args[i]);
+            data->p_stack->temp++;
+        }
+        i++;
     }
+    return (1);
+    // while (path && *path)
+    // {
+    //     //if only one dir
+    //     temp = ft_strchr(path, '/');
+    //     if (temp)
+    //         t_path = ft_strsub(path, temp - path, ft_strlen(temp));
+    //     if (!temp && ft_strncmp(path, "..", 2) != 0)
+    //     {
+    //         push(data->p_stack, path);
+    //         printf("Push: %s\n", path);
+    //         path = "\0";
+    //         break;
+    //     }
+    //     if (ft_strncmp(path, "..", 2) == 0 && data->p_stack->size > 1)
+    //     {
+    //         printf("popped\n");
+    //         pop(data->p_stack);
+    //         if (path[2] == '/')
+    //         {
+    //             printf("Path before: {%s}\n", path);
+    //             len = ft_strlen(path) - 3;
+    //             ft_memmove(path, path + 3, len);
+    //             path[len] = '\0';
+    //             printf("Path after: {%s}\n", path);
+    //         }
+    //         else if (path[2] == '\0')
+    //             ft_bzero(path, 3)
+    //     }
+    //     else if (ft_strncmp(path, "..", 2) == 0 && data->p_stack->size <= 1)
+    //         break;
+    // }
 }
 
 void        path_strjoin(char *path, char *str)

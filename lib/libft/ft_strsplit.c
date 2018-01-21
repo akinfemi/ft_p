@@ -41,10 +41,10 @@ static char		*next_word(char const **st, char delim)
 	str = *st;
 	while (str && *str == delim)
 		str++;
-	while (str[i] != delim && str[i])
+	while (str[i] && str[i] != delim)
 		i++;
 	word = (char *)malloc(sizeof(char) * i + 1);
-	while (*str != delim && str[i])
+	while (*str && *str != delim)
 	{
 		word[j] = *str;
 		j++;
