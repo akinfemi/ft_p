@@ -55,6 +55,7 @@ int         handle_cd(t_data *data)
     if (!cmd->args || !cmd->args[1])
     {
         chdir(data->home);
+        dprintf(data->as, "%s\n", "cd : SUCCESS");
     }
     else
     {
@@ -64,12 +65,10 @@ int         handle_cd(t_data *data)
         if (chdir(temp_path) == 0)
         {
             dprintf(data->as, "%s\n", "cd : SUCCESS");
-            path_strjoin(data, "/");
-            path_strjoin(data, cmd->args[1]);
         }
         else
             dprintf(data->as, "%s %s\n", "cd : ERROR", temp_path);
-        free(temp_path);
+        // free(temp_path);
     }
     return (1);
 }
