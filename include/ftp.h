@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include "../lib/includes/lib.h"
 # include <limits.h>
+# include <dirent.h>
 # define WORD 1
 # define CHAIN 2
 # define INIT_SIZE 10
@@ -48,7 +49,6 @@ typedef struct  s_stack
 {
     t_item          *item;
     size_t          size;
-    size_t          temp;
 }                   t_stack;
 
 typedef struct      s_data
@@ -80,6 +80,7 @@ t_stack     *init_path(void);
 char        *get_path(t_data *data);
 void        path_strjoin(char *path, char *str);
 int         set_path(t_data *data, char **args);
+char        *get_path_pwd(t_data *data);
 
 /*<-- Lexer and Parser -->*/
 t_list      *ft_lexer(char *input);

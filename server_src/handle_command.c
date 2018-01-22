@@ -46,10 +46,21 @@ int         handle_ls(t_data *data)
     return (1);
 }
 
+int         legal(t_data *data)
+{
+    t_stack *temp;
+
+    temp = NULL;
+    memcpy(temp, data->p_stack, sizeof(*(data->p_stack)));
+    printf("T: %zu, P: %zu\n",temp->size, data->p_stack->size);
+    return (1);
+}
+
 int         handle_cd(t_data *data)
 {
     t_command   *cmd;
     char        *temp_path;
+    char        *prev_path;
 
     cmd = (t_command *)data->commands->content;
     if (!cmd->args || !cmd->args[1])
@@ -60,21 +71,21 @@ int         handle_cd(t_data *data)
     }
     else
     {
-        set_path(data, cmd->args);
-        temp_path = get_path(data);
-        printf("temp path cd: %s\n", temp_path);
-        if (chdir(temp_path) == 0)
+        prev_path = get_path(data);
+        temp_path = ft_strjoin(prev_path, cmd->args[1]);
+        if(opendir(temp_path))
         {
+            set_path(data, cmd->args);
+            temp_path = get_path(data);
+            chdir(temp_path);
             dprintf(data->as, "%s\n", "cd : SUCCESS");
-            data->p_stack->temp = 0;
         }
         else
         {
-            dprintf(data->as, "%s %s\n", "cd : ERROR", temp_path);
-            while (data->p_stack->temp-- > 0)
-                pop(data->p_stack);
+            dprintf(data->as, "%s\n", "cd : ERROR");
         }
         // free(temp_path);
+        // free(prev_path);
     }
     return (1);
 }
