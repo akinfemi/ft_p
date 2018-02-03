@@ -46,16 +46,6 @@ int         handle_ls(t_data *data)
     return (1);
 }
 
-int         legal(t_data *data)
-{
-    t_stack *temp;
-
-    temp = NULL;
-    memcpy(temp, data->p_stack, sizeof(*(data->p_stack)));
-    printf("T: %zu, P: %zu\n",temp->size, data->p_stack->size);
-    return (1);
-}
-
 int         handle_cd(t_data *data)
 {
     t_command   *cmd;

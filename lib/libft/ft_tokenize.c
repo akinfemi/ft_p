@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ftp.h"
+#include "libft.h"
 
 t_list          *new_token(char *word, int type)
 {

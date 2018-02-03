@@ -71,8 +71,8 @@ int				main(int ac, char **av)
 		}
 		if (pid == 0) //on child processes only
 		{
-			write(cs, "Welcome to ft_p server", 22); // to client
 			printf("Client connected.\n"); //on server
+			write(cs, "Welcome to ft_p server", 22); // to client
 			data = init_data(cs);
 			handle_client(data);
 		}

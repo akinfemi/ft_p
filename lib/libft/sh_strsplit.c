@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ftp.h"
+#include "libft.h"
 
 static int  ft_is_quote(char c)
 {

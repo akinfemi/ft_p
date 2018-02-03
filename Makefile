@@ -18,11 +18,11 @@ LIB = lib/lib.a
 
 CFLAGS = -Wall -Werror -Wextra -I include/
 
-CLIENT_SRC = client.c usage.c error.c handle_response.c utils.c
+CLIENT_SRC = client.c usage.c error.c handle_response.c utils.c client_handles.c \
+				handle_path.c
 
 SERVER_SRC = server.c usage.c error.c handle_client.c handle_command.c \
-				handle.c read_and_send.c ft_lexer.c ft_parser.c ft_tokenize.c \
-				sh_strsplit.c dispatch.c handle_path.c stack.c
+				handle.c dispatch.c handle_path.c
 
 CLIENT_FILES = $(addprefix client_src/, $(CLIENT_SRC))
 

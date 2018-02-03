@@ -53,8 +53,11 @@ int		main(int ac, char **av)
 		buffer[rd] = '\0';
 		if (*buffer != '\n')
 		{
-			dprintf(sockt, "%s",buffer); //send to sockt
-			handle_response(sockt);
+			if (client_handles(buffer) == -1)
+			{
+				dprintf(sockt, "%s",buffer); //send to sockt
+				handle_response(sockt);
+			}
 		}
 		if (ft_strcmp(buffer, "quit\n") == 0)
 			exit(0);

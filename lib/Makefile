@@ -90,7 +90,12 @@ LIBFT =		btree_add_node.c\
             ft_pow.c \
 		ft_abs.c \
 		ft_isnum.c \
-        ft_realloc.c
+        ft_realloc.c \
+        ft_tokenize.c \
+        ft_lexer.c \
+        ft_parser.c \
+        sh_strsplit.c \
+        stack.c
             
 FT_PRINTF = ft_build.c\
             ft_is.c\
@@ -103,6 +108,7 @@ FT_PRINTF = ft_build.c\
             ft_handle_2.c\
             ft_handle_extra.c\
             ft_printf.c
+            
 
 GET_NEXT_LINE = get_next_line.c
 

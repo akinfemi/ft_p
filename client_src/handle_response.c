@@ -14,13 +14,14 @@
 
 void        handle_response(int socket_fd)
 {
-    int     rd;
-    char    buffer[1024];
+    size_t      rd;
+    char        buffer[4096];
 
-    rd = read(socket_fd, buffer, 1023);
-    if (rd > 0)
+    while ((rd = recv(socket_fd, buffer, 4095, 0)) > 0)
     {
         buffer[rd] = '\0';
         printf("%s", buffer);
+        if (rd < 4095)
+            break;
     }
 }

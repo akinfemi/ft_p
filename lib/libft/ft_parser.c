@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ftp.h"
+#include "libft.h"
 
 static char     **get_args(t_list **alst, int *type, char *bin)
 {

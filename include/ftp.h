@@ -22,34 +22,6 @@
 # include "../lib/includes/lib.h"
 # include <limits.h>
 # include <dirent.h>
-# define WORD 1
-# define CHAIN 2
-# define INIT_SIZE 10
-
-typedef struct      s_token
-{
-    char            *word;
-    int             type;
-}                   t_token;
-
-typedef struct      s_command
-{
-    char            *bin;
-    char            **args;
-    int             chain;
-}                   t_command;
-
-typedef struct      s_item
-{
-    char            *word;
-    struct s_item   *next;
-}                   t_item;
-  
-typedef struct  s_stack
-{
-    t_item          *item;
-    size_t          size;
-}                   t_stack;
 
 typedef struct      s_data
 {
@@ -81,16 +53,7 @@ char        *get_path(t_data *data);
 void        path_strjoin(char *path, char *str);
 int         set_path(t_data *data, char **args);
 char        *get_path_pwd(t_data *data);
+int         client_handles(char *buffer);
 
-/*<-- Lexer and Parser -->*/
-t_list      *ft_lexer(char *input);
-t_list      *ft_parser(t_list *tokens);
-t_list      *ft_tokenize(char **words);
-char        **sh_strsplit(char *words);
-
-/*<--------Stack--------------->*/
-t_stack             *stackInit(void);
-void                *pop(t_stack *stack);
-void                push(t_stack *stack, char *word);
 
 #endif

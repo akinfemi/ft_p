@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ftp.h"
+#include "libft.h"
 
 t_item  *new_node (char *word) {
 	t_item *item = malloc(sizeof(*item));
