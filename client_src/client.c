@@ -17,6 +17,7 @@ int		create_client(char *ip_addr, int port)
 	int			sockt;
 	struct protoent		*protocol;
 	struct sockaddr_in	addr;
+	
 
 	protocol = getprotobyname("tcp");
 	if (!protocol)

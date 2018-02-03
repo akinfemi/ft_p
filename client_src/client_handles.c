@@ -20,7 +20,7 @@ t_data			*init_cl_data(int accepted_socket)
 	data->as = accepted_socket;
 	getcwd(data->home, PATH_MAX);
 	data->home_len = ft_strlen(data->home);
-	data->p_stack = init_path();
+	data->p_stack = NULL;
 	data->commands = NULL;
 	data->u_input = NULL;
 	return (data);
@@ -29,33 +29,25 @@ t_data			*init_cl_data(int accepted_socket)
 int         handle_lcd(t_data *data)
 {
     t_command   *cmd;
-    char        *temp_path;
-    char        *prev_path;
 
     cmd = (t_command *)data->commands->content;
     if (!cmd->args || !cmd->args[1])
     {
         chdir(data->home);
-        set_path(data, cmd->args);
-        dprintf(data->as, "%s\n", "lcd : SUCCESS");
+        dprintf(data->as, "Home: %s\n", "lcd : HERE SUCCESS");
+        dprintf(data->as, "%s\n", "lcd : HERE SUCCESS");
     }
     else
     {
-        prev_path = get_path(data);
-        temp_path = ft_strjoin(prev_path, cmd->args[1]);
-        if(opendir(temp_path))
+        if(opendir(cmd->args[1]))
         {
-            set_path(data, cmd->args);
-            temp_path = get_path(data);
-            chdir(temp_path);
+            chdir(cmd->args[1]);
             dprintf(data->as, "%s\n", "lcd : SUCCESS");
         }
         else
         {
             dprintf(data->as, "%s\n", "lcd : ERROR");
         }
-        // free(temp_path);
-        // free(prev_path);
     }
     return (1);
 }
