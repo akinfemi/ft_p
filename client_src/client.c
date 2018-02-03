@@ -17,7 +17,6 @@ int		create_client(char *ip_addr, int port)
 	int			sockt;
 	struct protoent		*protocol;
 	struct sockaddr_in	addr;
-	
 
 	protocol = getprotobyname("tcp");
 	if (!protocol)
@@ -40,7 +39,9 @@ int		main(int ac, char **av)
 	int			sockt;
 	int			rd;
 	char		buffer[1024];
-
+	t_data  *data;
+	
+	data = init_cl_data(1);
 	if (ac != 3)
 		usage(av[0]);
 	port = ft_atoi(av[2]);
@@ -54,7 +55,7 @@ int		main(int ac, char **av)
 		buffer[rd] = '\0';
 		if (*buffer != '\n')
 		{
-			if (client_handles(buffer) == -1)
+			if (client_handles(buffer, data) == -1)
 			{
 				dprintf(sockt, "%s",buffer); //send to sockt
 				handle_response(sockt);

@@ -53,7 +53,7 @@ char        *get_path(t_data *data);
 void        path_strjoin(char *path, char *str);
 int         set_path(t_data *data, char **args);
 char        *get_path_pwd(t_data *data);
-int         client_handles(char *buffer);
-
+int         client_handles(char *buffer, t_data *data);
+t_data      *init_cl_data(int accepted_socket);
 
 #endif

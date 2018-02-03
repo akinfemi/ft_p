@@ -102,12 +102,10 @@ int     dispatch(t_data *data)
     return (-1);
 }
 
-int         client_handles(char *buffer)
+int         client_handles(char *buffer, t_data *data)
 {
     t_list  *tokens;
-    t_data  *data;
 
-    data = init_cl_data(1);
     tokens = ft_lexer(ft_strtrim(buffer));
     data->commands = ft_parser(tokens);
     return (dispatch(data));
