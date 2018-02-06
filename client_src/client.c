@@ -39,9 +39,8 @@ int		main(int ac, char **av)
 	int			sockt;
 	int			rd;
 	char		buffer[1024];
-	t_data  *data;
+	t_data		*data;
 	
-	data = init_cl_data(1);
 	if (ac != 3)
 		usage(av[0]);
 	port = ft_atoi(av[2]);
@@ -49,6 +48,7 @@ int		main(int ac, char **av)
 	if (sockt == -1)
 		print_error(3);
 	read_welcome(sockt);
+	data = init_cl_data(sockt);
 	write(1, "$> ", 3);
 	while ((rd = read(0, buffer, 1023)) > 0)
 	{

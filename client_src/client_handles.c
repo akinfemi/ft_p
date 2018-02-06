@@ -34,8 +34,7 @@ int         handle_lcd(t_data *data)
     if (!cmd->args || !cmd->args[1])
     {
         chdir(data->home);
-        dprintf(data->as, "Home: %s\n", "lcd : HERE SUCCESS");
-        dprintf(data->as, "%s\n", "lcd : HERE SUCCESS");
+        dprintf(data->as, "%s\n", "lcd : SUCCESS");
     }
     else
     {
@@ -72,14 +71,16 @@ char        *cl_commands[] =
 {
     "lls",
     "lcd",
-    "lpwd"
+    "lpwd",
+    "put"
 };
 
 int     (*cl_cmds[]) (t_data *data) = 
 {
     &handle_lls,
     &handle_lcd,
-    &handle_path
+    &handle_path,
+    &handle_put
 };
 
 int     dispatch(t_data *data)

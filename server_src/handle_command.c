@@ -39,10 +39,8 @@ int         handle_ls(t_data *data)
         cmd = (t_command *)data->commands->content;
         execv("/bin/ls", cmd->args);
     }
-    while (!WIFEXITED(status) && !WIFSIGNALED(status))
-    {
-        pid = wait4(pid, &status, WUNTRACED, rusage);
-    }
+    while ((pid == wait(&status)) > 0)
+        ;
     return (1);
 }
 

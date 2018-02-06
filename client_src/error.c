@@ -29,4 +29,8 @@ void		print_error(int error)
 		printf("Socket failure.\n");
 		exit(2);
 	}
+	else if (error == 4)
+	{
+		printf("Data Connection Error.\n");
+	}
 }

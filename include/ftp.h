@@ -22,6 +22,7 @@
 # include "../lib/includes/lib.h"
 # include <limits.h>
 # include <dirent.h>
+# define BUFFER_SIZE 4068
 
 typedef struct      s_data
 {
@@ -29,6 +30,8 @@ typedef struct      s_data
     int             home_len;
     char            *u_input;
     int             as;
+    int             data_socket;
+    int             data_as;
     t_stack         *p_stack;
     t_list          *commands;
 }                   t_data;

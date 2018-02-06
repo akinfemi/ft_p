@@ -19,7 +19,7 @@ LIB = lib/lib.a
 CFLAGS = -Wall -Werror -Wextra -I include/
 
 CLIENT_SRC = client.c usage.c error.c handle_response.c utils.c client_handles.c \
-				handle_path.c
+				handle_path.c handle_put.c
 
 SERVER_SRC = server.c usage.c error.c handle_client.c handle_command.c \
 				handle.c dispatch.c handle_path.c
