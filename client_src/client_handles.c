@@ -71,8 +71,7 @@ char        *cl_commands[] =
 {
     "lls",
     "lcd",
-    "lpwd",
-    "put"
+    "lpwd"
 };
 
 int     (*cl_cmds[]) (t_data *data) = 
@@ -80,7 +79,6 @@ int     (*cl_cmds[]) (t_data *data) =
     &handle_lls,
     &handle_lcd,
     &handle_path,
-    &handle_put
 };
 
 int     dispatch(t_data *data)

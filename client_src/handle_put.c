@@ -31,6 +31,7 @@ void        transfer_data(t_data *data)
     int         fd;
     int         rd;
     char        buffer[BUFFER_SIZE];
+    // char        *cwd;
 
     cmd = (t_command *)data->commands->content;
     if (!cmd->args || !cmd->args[1])
@@ -39,12 +40,16 @@ void        transfer_data(t_data *data)
     }
     else
     {
+        // cwd = getcwd(buffer, BUFF_SIZE);
+        // sprintf(buffer, "%s/%s", cwd,cmd->args[1]);
+        // printf("CWD: %s\n%s\n", buffer, cmd->args[1]);
         fd = open(cmd->args[1], O_RDONLY);
         while ((rd = read(fd, buffer, BUFFER_SIZE)))
         {
             buffer[rd] = '\0';
-            send(data->data_socket, buffer, rd, 0);
-            ft_bzero(buffer, rd + 1);
+            // printf("Yello: {%s}\n", buffer);
+            write(data->data_socket, buffer, rd);
+            buffer[0] = '\0';
         }
         close(fd);
     }
@@ -62,7 +67,8 @@ int         handle_put(t_data *data)
         port = get_port(data->as);
         printf("Port: %d\n", port);
         addr.sin_family = AF_INET;
-        addr.sin_port = port;
+        addr.sin_port = htons(port);
+        addr.sin_addr.s_addr = inet_addr("127.0.0.1");
         data->data_socket = socket(PF_INET, SOCK_STREAM, 0);
         if (connect(data->data_socket, (const struct sockaddr *)&addr, sizeof(addr)) == -1)
             print_error(4);

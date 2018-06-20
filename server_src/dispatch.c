@@ -18,9 +18,17 @@ char        *ls_commands[] =
     "cd",
     "pwd",
     "quit",
-    "put",
-    "get"
 };
+
+// char        *ls_commands[] =
+// {
+//     "ls",
+//     "cd",
+//     "pwd",
+//     "quit",
+//     "put",
+//     "get"
+// };
 
 int     (*ls_cmds[]) (t_data *data) = 
 {
@@ -28,8 +36,6 @@ int     (*ls_cmds[]) (t_data *data) =
     &handle_cd,
     &handle_path,
     &handle_quit,
-    &handle_put,
-    &handle_get,
     &handle_other
 };
 
@@ -46,6 +52,7 @@ int     dispatch(t_data *data)
     {
         if (ft_strcmp(ls_commands[i], command->bin) == 0)
         {
+            printf("OO: %s -- %s\n", command->bin, command->args[1]);
             return ((*ls_cmds[i])(data));
         }
         i++;

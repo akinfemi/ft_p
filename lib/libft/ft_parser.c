@@ -45,17 +45,17 @@ static char     **get_args(t_list **alst, int *type, char *bin)
     *alst = list;
     return (res);
 }
-
-// static void print_tokens(t_list *tokens)
-// {
-//     t_token *test;
-//     while(tokens)
-//     {
-//         test = tokens->content;
-//         printf("Tokes: %s\n", test->word);
-//         tokens = tokens->next;
-//     }
-// }
+#include <stdio.h>
+static void print_tokens(t_list *tokens)
+{
+    t_token *test;
+    while(tokens)
+    {
+        test = tokens->content;
+        printf("Tokes: %s\n", test->word);
+        tokens = tokens->next;
+    }
+}
 
 t_list          *ft_parser(t_list *tokens)
 {
@@ -65,8 +65,8 @@ t_list          *ft_parser(t_list *tokens)
     int         type;
 
     commands = NULL;
-    // print_tokens(tokens);
-    // printf("Here tokens\n");
+    print_tokens(tokens);
+    printf("Here tokens\n");
     while (tokens)
     {
         token = tokens->content;
@@ -105,6 +105,6 @@ t_list          *ft_parser(t_list *tokens)
     //     printf("Command bins: %s\n", command->bin);
     //     cm = cm->next;
     // }
-    // printf("bye tokens\n");
+    printf("bye tokens\n");
     return (commands);
 }
