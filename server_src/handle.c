@@ -19,20 +19,38 @@ int         handle_get(t_data *data)
     return (1);
 }
 
+int         file_exist(char *filename)
+{
+    int     fd;
+
+    fd = open(filename, O_RDONLY);
+    if (fd > 1)
+    {
+        close(fd);
+        return (1);
+    }
+    return (0);
+}
+
 void        receive_data(t_data *data)
 {
     struct  stat file_stat;
     t_command   *cmd;
+    int         fd;
 
-    cmd = (t_command *) data->command->content;
-    if(fstat(data->cmd->args[1]) == -1)
+    cmd = (t_command *) data->commands->content;
+    if (!file_exist(cmd->args[1]))
     {
-
+        fd = open(cmd->args[1], O_WRONLY)
     }
-    else
-    {
-        // printf("File already exists");
-    }
+    // if(fstat(cmd->args[1]) == -1)
+    // {
+    //     printf("File doesn't exist, create, read from socket and write to file");
+    // }
+    // else
+    // {
+    //     printf("File already exists");
+    // }
 }
 
 int         handle_put(t_data *data)
