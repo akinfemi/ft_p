@@ -62,13 +62,14 @@ int         handle_put(t_data *data)
     struct sockaddr_in  addr;
 
     ft_memset(&addr, 0, sizeof(addr));
-    if ((sd = send(data->as, "put\n", 4, 0x1)) > 0)
+    if ((sd = write(data->as, data->u_input, ft_strlen(data->u_input))) > 0)
     {
         port = get_port(data->as);
         printf("Port: %d\n", port);
         addr.sin_family = AF_INET;
         addr.sin_port = htons(port);
-        addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+        printf("IP: %s\n", data->ip);
+        addr.sin_addr.s_addr = inet_addr(data->ip);
         data->data_socket = socket(PF_INET, SOCK_STREAM, 0);
         if (connect(data->data_socket, (const struct sockaddr *)&addr, sizeof(addr)) == -1)
             print_error(4);

@@ -12,11 +12,14 @@
 
 #include "../include/ftp.h"
 
-t_data			*init_cl_data(int accepted_socket)
+t_data			*init_cl_data(int accepted_socket, char *ip_addr)
 {
 	t_data	*data;
 
 	data = (t_data *)malloc(sizeof(t_data));
+    if (ft_strcmp(ip_addr, "localhost") == 0)
+		ip_addr = "127.0.0.1";
+    data->ip = ip_addr;
 	data->as = accepted_socket;
 	getcwd(data->home, PATH_MAX);
 	data->home_len = ft_strlen(data->home);
@@ -71,7 +74,8 @@ char        *cl_commands[] =
 {
     "lls",
     "lcd",
-    "lpwd"
+    "lpwd",
+    "put"
 };
 
 int     (*cl_cmds[]) (t_data *data) = 
@@ -79,6 +83,7 @@ int     (*cl_cmds[]) (t_data *data) =
     &handle_lls,
     &handle_lcd,
     &handle_path,
+    &handle_put
 };
 
 int     dispatch(t_data *data)
@@ -105,7 +110,8 @@ int         client_handles(char *buffer, t_data *data)
 {
     t_list  *tokens;
 
-    tokens = ft_lexer(ft_strtrim(buffer));
+    data->u_input = ft_strtrim(buffer);
+    tokens = ft_lexer(data->u_input);
     data->commands = ft_parser(tokens);
     return (dispatch(data));
 }

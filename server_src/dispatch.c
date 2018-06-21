@@ -18,17 +18,9 @@ char        *ls_commands[] =
     "cd",
     "pwd",
     "quit",
+    "put",
+    "get"
 };
-
-// char        *ls_commands[] =
-// {
-//     "ls",
-//     "cd",
-//     "pwd",
-//     "quit",
-//     "put",
-//     "get"
-// };
 
 int     (*ls_cmds[]) (t_data *data) = 
 {
@@ -36,6 +28,8 @@ int     (*ls_cmds[]) (t_data *data) =
     &handle_cd,
     &handle_path,
     &handle_quit,
+    &handle_put,
+    &handle_get,
     &handle_other
 };
 

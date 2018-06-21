@@ -32,6 +32,7 @@ typedef struct      s_data
     int             as;
     int             data_socket;
     int             data_as;
+    char            *ip;
     t_stack         *p_stack;
     t_list          *commands;
 }                   t_data;
@@ -57,6 +58,6 @@ void        path_strjoin(char *path, char *str);
 int         set_path(t_data *data, char **args);
 char        *get_path_pwd(t_data *data);
 int         client_handles(char *buffer, t_data *data);
-t_data      *init_cl_data(int accepted_socket);
+t_data      *init_cl_data(int accepted_socket, char *ip_addr);
 
 #endif

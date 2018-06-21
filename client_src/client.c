@@ -48,7 +48,7 @@ int		main(int ac, char **av)
 	if (sockt == -1)
 		print_error(3);
 	read_welcome(sockt);
-	data = init_cl_data(sockt);
+	data = init_cl_data(sockt, av[1]);
 	write(1, "$> ", 3);
 	while ((rd = read(0, buffer, 1023)) > 0)
 	{

@@ -21,6 +21,7 @@ void        handle_client(t_data *data)
     while((rd = read(data->as, buffer, 1023)) > 0)
     {
         buffer[rd] = '\0';
+        printf("bf: %s\n",buffer);
         data->u_input = ft_strtrim(buffer);
         tokens = ft_lexer(data->u_input);
         data->commands = ft_parser(tokens);
