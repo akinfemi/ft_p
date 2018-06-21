@@ -62,24 +62,30 @@ static int send_data(t_data *data)
     char        buffer[1024];
 
     cmd = (t_command *) data->commands->content;
+    printf("Before file exists check\n");
     if (cmd->args && file_exist_wo_stat(cmd->args[1]))
     {
         fd = open(cmd->args[1], O_RDONLY);
     }
     else
     {
-        return (EXIST_ERROR);
+        printf("Exist error\n");
+        return (1);
     }
     if (fd == -1)
     {
-        return (OPEN_ERROR);
+        printf("Open error\n");
+        return (1);
     }
+    printf("Before file read check\n");
     while((rd = read(fd, buffer, 1023)) > 0)
     {
         buffer[rd] = '\0';
+        printf("Yello{%s}\n", buffer);
         write(data->data_as, buffer, rd);
     }
     close(fd);
+    printf("Done reading and closed fd\n");
     return (1);
 }
 
@@ -87,7 +93,7 @@ int         handle_get(t_data *data)
 {
     data->data_socket = socket(PF_INET, SOCK_STREAM, 0);
     data->data_as = new_socket_connection(data);
-    printf("New connection established\n");
+    printf("New connection established at %d\n\n", data->data_as);
     if (data->data_as == -1)
         print_error(3);
     send_data(data);

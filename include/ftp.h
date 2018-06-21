@@ -61,5 +61,6 @@ int         set_path(t_data *data, char **args);
 char        *get_path_pwd(t_data *data);
 int         client_handles(char *buffer, t_data *data);
 t_data      *init_cl_data(int accepted_socket, char *ip_addr);
+int         get_port(int socket_fd);
 
 #endif
