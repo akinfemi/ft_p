@@ -48,7 +48,6 @@ static int        get_data(t_data *data)
         printf("Open error\n");
         return (1);
     }
-    printf("Stuck on read from %d\n", data->data_socket);
     while((rd = read(data->data_socket, buffer, 1023)) > 0)
     {
         buffer[rd] = '\0';
@@ -69,17 +68,14 @@ int         handle_get(t_data *data)
     if ((sd = write(data->cmd_as, data->u_input, ft_strlen(data->u_input))) > 0)
     {
         port = get_port(data->cmd_as);
-        printf("Port: %d\n", port);
         addr.sin_family = AF_INET;
         addr.sin_port = htons(port);
-        printf("IP: %s\n", data->ip);
         addr.sin_addr.s_addr = inet_addr(data->ip);
         data->data_socket = socket(PF_INET, SOCK_STREAM, 0);
         if (connect(data->data_socket, (const struct sockaddr *)&addr, sizeof(addr)) == -1)
             print_error(4);
         else
             printf("Data Connection Established\n");
-        // listen(data->data_socket, 1);
         get_data(data);
     }
     close(data->data_socket);
