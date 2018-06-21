@@ -16,7 +16,7 @@ SER_VER = server
 
 LIB = lib/lib.a
 
-CFLAGS = -Wall -Werror -Wextra -I include/
+CFLAGS = -Wall -Werror -Wextra -I include/ -g -fsanitize=address -fsanitize=undefined
 
 CLIENT_SRC = client.c usage.c error.c handle_response.c utils.c client_handles.c \
 				handle_path.c handle_put.c handle_get.c
@@ -47,11 +47,11 @@ $(SERVER_OBJ_FILES):%.o: %.c
 	@gcc -c $(CFLAGS) $< -o $@
 
 $(CLI_ENT): $(CLIENT_OBJ_FILES) $(LIB)
-	@gcc $(CLIENT_OBJ_FILES) $(LIB) -o $(CLI_ENT)
+	@gcc -g -fsanitize=address -fsanitize=undefined $(CLIENT_OBJ_FILES) $(LIB) -o $(CLI_ENT)
 	@echo "Client created"
 
 $(SER_VER): $(SERVER_OBJ_FILES) $(LIB)  
-	@gcc $(SERVER_OBJ_FILES) $(LIB) -o $(SER_VER)
+	@gcc -g -fsanitize=address -fsanitize=undefined $(SERVER_OBJ_FILES) $(LIB) -o $(SER_VER)
 	@echo "Server created."
 
 clean:

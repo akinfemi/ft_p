@@ -66,14 +66,15 @@ char			**ft_strsplit(char const *s, char c)
 	n_words = get_nwords(s, c);
 	ans = 0;
 	i = 0;
-	ans = (char **)malloc(sizeof(char *) * n_words + 1);
+	ans = (char **)malloc(sizeof(char *) * (n_words + 1));
+	ft_bzero(ans, n_words + 1);
 	if (ans == NULL)
 		return (ans);
+	ans[n_words] = NULL;
 	while (i < n_words)
 	{
 		ans[i] = next_word(&s, c);
 		i++;
 	}
-	ans[i] = 0;
 	return (ans);
 }

@@ -17,9 +17,12 @@ t_data			*init_data(int accepted_socket)
 	t_data	*data;
 
 	data = (t_data *)malloc(sizeof(t_data));
+	if (!data)
+		return (NULL);
 	data->cmd_as = accepted_socket;
 	getcwd(data->home, PATH_MAX);
 	data->home_len = ft_strlen(data->home);
+	data->home[data->home_len] = '\0';
 	data->p_stack = init_path();
 	data->commands = NULL;
 	data->u_input = NULL;

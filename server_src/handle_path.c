@@ -88,6 +88,7 @@ void        path_strjoin(char *path, char *str)
         j++;
         i++;
     }
+    path[i] = '\0';
     // free(str);
 }
 
@@ -112,32 +113,35 @@ char        *get_path_pwd(t_data *data)
     len = 0;
     path = data->p_stack->item;
     ft_bzero((char *)temp_path, PATH_MAX);
-    path_strjoin(temp_path, "~");
-    path_strjoin(temp_path, "/");
+    temp_path[0] =  '~';
+    temp_path[1] =  '/';
     str = (char *)malloc(sizeof(char) * PATH_MAX + 1);
+    ft_bzero(str, PATH_MAX);
     recurse(path, str, len);
-    path_strjoin(temp_path, str);
+    // path_strjoin(temp_path, str);
     // free(str);
-    return (ft_strdup(temp_path));
+    return (ft_strjoin(temp_path, str));
 }
 
 char        *get_path(t_data *data)
 {
     t_item  *path;
-    char    temp_path[PATH_MAX];
+    char    *temp_path;
     char    *str;
     int     len;
 
     len = 0;
     path = data->p_stack->item;
-    ft_bzero((char *)temp_path, PATH_MAX);
+    temp_path = (char *)malloc(sizeof(char) * PATH_MAX + 1);
+    ft_bzero(temp_path, PATH_MAX);
     path_strjoin(temp_path, data->home);
     path_strjoin(temp_path, "/");
     str = (char *)malloc(sizeof(char) * PATH_MAX + 1);
+    ft_bzero(str, PATH_MAX);
     recurse(path, str, len);
     path_strjoin(temp_path, str);
-    // free(str);
-    return (ft_strdup(temp_path));
+    free(str);
+    return (temp_path);
 }
 
 

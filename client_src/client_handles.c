@@ -23,6 +23,7 @@ t_data			*init_cl_data(int accepted_socket, char *ip_addr)
 	data->cmd_as = accepted_socket;
 	getcwd(data->home, PATH_MAX);
 	data->home_len = ft_strlen(data->home);
+    data->home[data->home_len] = '\0';
 	data->p_stack = NULL;
 	data->commands = NULL;
 	data->u_input = NULL;
