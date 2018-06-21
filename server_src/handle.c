@@ -107,23 +107,23 @@ static int receive_data(t_data *data)
     if (cmd->args && file_exist_wo_stat(cmd->args[1]))
     {
         printf("Exists error\n");
-        return (EXIST_ERROR);
+        return (1);
     }
     else
     {
-        printf("FILE: %s\n", cmd->args[1]);
-        fd = open(cmd->args[1], O_WRONLY | O_CREAT);
+        fd = open(cmd->args[1], O_WRONLY | O_CREAT, 0777);
     }
     if (fd == -1)
     {
         printf("Open error\n");
-        return (OPEN_ERROR);
+        return (1);
     }
     while((rd = read(data->data_as, buffer, 1023)) > 0)
     {
         buffer[rd] = '\0';
         write(fd, buffer, rd);
     }
+    printf("FILE: %s Status: %s\n", cmd->args[1], "Transfer complete");
     close(fd);
     return (1);
 }
@@ -135,10 +135,7 @@ int         handle_put(t_data *data)
     printf("New connection established\n");
     if (data->data_as == -1)
         print_error(3);
-    if(receive_data(data) != 1)
-    {
-        // write(data->cmd_as, "Transfer error\n", 15);
-    }
+    receive_data(data);
     close(data->data_as);
     close(data->data_socket);
     return (1);

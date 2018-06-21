@@ -36,7 +36,7 @@ int         handle_lcd(t_data *data)
     cmd = (t_command *)data->commands->content;
     if (!cmd->args || !cmd->args[1])
     {
-        chdir(data->home);
+        chdir(".");
     }
     else
     {

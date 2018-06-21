@@ -40,14 +40,10 @@ void        transfer_data(t_data *data)
     }
     else
     {
-        // cwd = getcwd(buffer, BUFF_SIZE);
-        // sprintf(buffer, "%s/%s", cwd,cmd->args[1]);
-        // printf("CWD: %s\n%s\n", buffer, cmd->args[1]);
         fd = open(cmd->args[1], O_RDONLY);
         while ((rd = read(fd, buffer, BUFFER_SIZE)))
         {
             buffer[rd] = '\0';
-            // printf("Yello: {%s}\n", buffer);
             write(data->data_socket, buffer, rd);
             buffer[0] = '\0';
         }
@@ -62,9 +58,9 @@ int         handle_put(t_data *data)
     struct sockaddr_in  addr;
 
     ft_memset(&addr, 0, sizeof(addr));
-    if ((sd = write(data->as, data->u_input, ft_strlen(data->u_input))) > 0)
+    if ((sd = write(data->cmd_as, data->u_input, ft_strlen(data->u_input))) > 0)
     {
-        port = get_port(data->as);
+        port = get_port(data->cmd_as);
         printf("Port: %d\n", port);
         addr.sin_family = AF_INET;
         addr.sin_port = htons(port);
