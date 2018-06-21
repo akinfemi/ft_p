@@ -46,7 +46,6 @@ int     dispatch(t_data *data)
     {
         if (ft_strcmp(ls_commands[i], command->bin) == 0)
         {
-            printf("OO: %s -- %s\n", command->bin, command->args[1]);
             return ((*ls_cmds[i])(data));
         }
         i++;

@@ -146,7 +146,7 @@ int         handle_path(t_data *data)
     char    *path;
 
     path = get_path_pwd(data);
-    dprintf(data->as,"pwd:SUCCESS\n%s\n", path);
+    dprintf(data->cmd_as,"pwd:SUCCESS\n%s\n", path);
     free(path);
     return (1);
 }

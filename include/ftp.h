@@ -23,13 +23,15 @@
 # include <limits.h>
 # include <dirent.h>
 # define BUFFER_SIZE 4068
+# define EXIST_ERROR 0x03
+# define OPEN_ERROR 0x04
 
 typedef struct      s_data
 {
     char            home[PATH_MAX];
     int             home_len;
     char            *u_input;
-    int             as;
+    int             cmd_as;
     int             data_socket;
     int             data_as;
     char            *ip;

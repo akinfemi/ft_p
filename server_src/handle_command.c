@@ -35,7 +35,7 @@ int         handle_ls(t_data *data)
     rusage = NULL;
     if ((pid = fork()) == 0)
     {
-        dup2(data->as, 1);
+        dup2(data->cmd_as, 1);
         cmd = (t_command *)data->commands->content;
         execv("/bin/ls", cmd->args);
     }
@@ -55,7 +55,7 @@ int         handle_cd(t_data *data)
     {
         chdir(data->home);
         set_path(data, cmd->args);
-        dprintf(data->as, "%s\n", "cd : SUCCESS");
+        dprintf(data->cmd_as, "%s\n", "cd : SUCCESS");
     }
     else
     {
@@ -66,11 +66,11 @@ int         handle_cd(t_data *data)
             set_path(data, cmd->args);
             temp_path = get_path(data);
             chdir(temp_path);
-            dprintf(data->as, "%s\n", "cd : SUCCESS");
+            dprintf(data->cmd_as, "%s\n", "cd : SUCCESS");
         }
         else
         {
-            dprintf(data->as, "%s\n", "cd : ERROR");
+            dprintf(data->cmd_as, "%s\n", "cd : ERROR");
         }
         // free(temp_path);
         // free(prev_path);
@@ -81,14 +81,14 @@ int         handle_cd(t_data *data)
 int         handle_quit(t_data *data)
 {
     printf("Closing client.\n");
-    write(data->as, "Goodbye :) ...\n", 15);
+    write(data->cmd_as, "Goodbye :) ...\n", 15);
     //cleaning up client memory usage
-    close(data->as);
+    close(data->cmd_as);
     return (1);
 }
 
 int         handle_other(t_data *data)
 {
-    dprintf(data->as, "%s is an Invalid Command\n", data->u_input);
+    dprintf(data->cmd_as, "%s is an Invalid Command\n", data->u_input);
     return (1);
 }

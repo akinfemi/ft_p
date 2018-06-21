@@ -18,7 +18,7 @@ void        handle_client(t_data *data)
     char    buffer[1024];
     t_list  *tokens;
 
-    while((rd = read(data->as, buffer, 1023)) > 0)
+    while((rd = read(data->cmd_as, buffer, 1023)) > 0)
     {
         buffer[rd] = '\0';
         printf("bf: %s\n",buffer);

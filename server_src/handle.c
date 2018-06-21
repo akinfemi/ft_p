@@ -33,7 +33,7 @@ static int  new_socket_connection(t_data *data)
     {
         port_addr = ft_itoa(ntohs(addr.sin_port));
         printf("Port: {%s}\n", port_addr);
-        write(data->as, port_addr, ft_strlen(port_addr));
+        write(data->cmd_as, port_addr, ft_strlen(port_addr)); //let the client know where to connect to
         accepted_socket = accept(data->data_socket, (struct sockaddr *)&addr, &addr_len);
         printf("connection accepted\n");
         free(port_addr);
@@ -63,16 +63,16 @@ static int send_data(t_data *data)
 
     cmd = (t_command *) data->commands->content;
     if (cmd->args && file_exist_wo_stat(cmd->args[1]))
+    {
         fd = open(cmd->args[1], O_RDONLY);
+    }
     else
     {
-        write(data->as, "File doesn't exist\n", 19);
-        return (0);
+        return (EXIST_ERROR);
     }
     if (fd == -1)
     {
-        write(data->as, "File cannot be read\n", 20);
-        return (0);
+        return (OPEN_ERROR);
     }
     while((rd = read(fd, buffer, 1023)) > 0)
     {
@@ -105,12 +105,19 @@ static int receive_data(t_data *data)
 
     cmd = (t_command *) data->commands->content;
     if (cmd->args && file_exist_wo_stat(cmd->args[1]))
-        fd = open(cmd->args[1], O_WRONLY);
+    {
+        printf("Exists error\n");
+        return (EXIST_ERROR);
+    }
     else
     {
-        write(data->as, "File exists by that name on server\n", 25);
-        printf("Reciveing data to: %s -> bin %s\n", cmd->bin,cmd->args[1]);
-        return (0);
+        printf("FILE: %s\n", cmd->args[1]);
+        fd = open(cmd->args[1], O_WRONLY | O_CREAT);
+    }
+    if (fd == -1)
+    {
+        printf("Open error\n");
+        return (OPEN_ERROR);
     }
     while((rd = read(data->data_as, buffer, 1023)) > 0)
     {
@@ -128,7 +135,10 @@ int         handle_put(t_data *data)
     printf("New connection established\n");
     if (data->data_as == -1)
         print_error(3);
-    receive_data(data);
+    if(receive_data(data) != 1)
+    {
+        // write(data->cmd_as, "Transfer error\n", 15);
+    }
     close(data->data_as);
     close(data->data_socket);
     return (1);
