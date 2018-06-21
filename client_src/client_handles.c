@@ -20,7 +20,7 @@ t_data			*init_cl_data(int accepted_socket, char *ip_addr)
     if (ft_strcmp(ip_addr, "localhost") == 0)
 		ip_addr = "127.0.0.1";
     data->ip = ip_addr;
-	data->as = accepted_socket;
+	data->cmd_as = accepted_socket;
 	getcwd(data->home, PATH_MAX);
 	data->home_len = ft_strlen(data->home);
 	data->p_stack = NULL;
@@ -37,18 +37,12 @@ int         handle_lcd(t_data *data)
     if (!cmd->args || !cmd->args[1])
     {
         chdir(data->home);
-        dprintf(data->as, "%s\n", "lcd : SUCCESS");
     }
     else
     {
         if(opendir(cmd->args[1]))
         {
             chdir(cmd->args[1]);
-            dprintf(data->as, "%s\n", "lcd : SUCCESS");
-        }
-        else
-        {
-            dprintf(data->as, "%s\n", "lcd : ERROR");
         }
     }
     return (1);

@@ -12,11 +12,11 @@
 
 #include "../include/ftp.h"
 
-int         handle_path(t_data *data)
+int         handle_path(t_data __attribute__((__unused__)) *data)
 {
     char    path[PATH_MAX];
 
     getcwd(path, PATH_MAX);
-    dprintf(data->as,"pwd:SUCCESS\n%s\n", path);
+    printf("%s\n", path);
     return (1);
 }
