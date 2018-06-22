@@ -30,7 +30,7 @@ void        transfer_data(t_data *data)
     t_command   *cmd;
     int         fd;
     int         rd;
-    char        buffer[BUFFER_SIZE];
+    char        buffer[BUFFER_SIZE + 1];
 
     cmd = (t_command *)data->commands->content;
     if (!cmd->args || !cmd->args[1])

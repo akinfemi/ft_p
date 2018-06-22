@@ -28,7 +28,7 @@
 
 typedef struct      s_data
 {
-    char            home[PATH_MAX];
+    char            home[PATH_MAX + 1];
     int             home_len;
     char            *u_input;
     int             cmd_as;

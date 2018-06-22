@@ -106,21 +106,23 @@ void        recurse(t_item *item, char *str, int len)
 char        *get_path_pwd(t_data *data)
 {
     t_item  *path;
-    char    temp_path[PATH_MAX];
+    // char    temp_path[PATH_MAX];
+    char    *temp_path;
     char    *str;
     int     len;
 
     len = 0;
     path = data->p_stack->item;
-    ft_bzero((char *)temp_path, PATH_MAX);
+    temp_path = (char *)malloc(sizeof(char *) * (PATH_MAX + 1));
+    ft_bzero(temp_path, PATH_MAX + 1);
     temp_path[0] =  '~';
     temp_path[1] =  '/';
     str = (char *)malloc(sizeof(char) * PATH_MAX + 1);
     ft_bzero(str, PATH_MAX);
     recurse(path, str, len);
-    // path_strjoin(temp_path, str);
-    // free(str);
-    return (ft_strjoin(temp_path, str));
+    path_strjoin(temp_path, str);
+    free(str);
+    return (temp_path);
 }
 
 char        *get_path(t_data *data)
